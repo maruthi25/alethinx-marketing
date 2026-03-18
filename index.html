@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alethinx AI — Autonomous Deal Intelligence for Business Acquirers</title>
+<meta name="description" content="AI-powered acquisition intelligence. Autonomous agents source deals, run board analysis, and structure zero-PG financing — so you acquire with confidence.">
+<meta property="og:title" content="Alethinx AI — Autonomous Deal Intelligence">
+<meta property="og:description" content="AI agents source deals, run 5-role board analysis, and structure zero-PG financing. $250K+ passive income with zero personal capital at risk.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alethinx.ai">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alethinx AI — Autonomous Deal Intelligence">
+<link rel="canonical" href="https://alethinx.ai">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06060b;--surface:#0c0c14;--border:rgba(255,255,255,0.06);
+  --text:#e8e8ec;--muted:rgba(255,255,255,0.45);--dim:rgba(255,255,255,0.25);
+  --accent:#00e5a0;--accent-dim:rgba(0,229,160,0.12);--accent-glow:rgba(0,229,160,0.25);
+  --warm:#fbbf24;--danger:#ff6b6b;
+  --font-body:'Outfit',system-ui,sans-serif;
+  --font-display:'Source Serif 4',Georgia,serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+/* Ambient */
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 60% 40% at 20% 10%,rgba(0,229,160,0.05) 0%,transparent 70%),
+  radial-gradient(ellipse 50% 50% at 80% 70%,rgba(99,102,241,0.03) 0%,transparent 70%)}
+
+/* Grid overlay */
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.025;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:60px 60px}
+
+.container{max-width:1140px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* Nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(6,6,11,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+nav .inner{display:flex;align-items:center;justify-content:space-between;height:60px;max-width:1140px;margin:0 auto;padding:0 24px}
+nav .logo{font-family:var(--font-body);font-weight:700;font-size:16px;color:var(--accent);letter-spacing:-0.3px}
+nav .links{display:flex;gap:4px;align-items:center}
+nav .links a{padding:6px 14px;border-radius:8px;font-size:13px;font-weight:500;color:var(--muted);transition:all 0.2s}
+nav .links a:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:9px 22px;border-radius:10px;background:var(--accent);color:#06060b;font-size:13px;font-weight:700;font-family:var(--font-body);border:none;cursor:pointer;box-shadow:0 4px 20px var(--accent-glow);transition:all 0.2s}
+.btn-primary:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:9px 22px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text);font-size:13px;font-weight:600;font-family:var(--font-body);cursor:pointer;transition:all 0.2s}
+.btn-secondary:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.12)}
+.hamburger{display:none;background:none;border:none;color:var(--muted);cursor:pointer;font-size:22px}
+
+/* Hero */
+.hero{padding:120px 0 80px;text-align:center}
+.hero .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:100px;background:var(--accent-dim);border:1px solid rgba(0,229,160,0.2);font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px;animation:fadeUp 0.6s ease both}
+.hero .badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.hero h1{font-family:var(--font-display);font-size:clamp(38px,6vw,76px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:24px;animation:fadeUp 0.6s 0.1s ease both}
+.hero h1 .highlight{background:linear-gradient(135deg,var(--accent),var(--warm));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:18px;color:var(--muted);max-width:580px;margin:0 auto 40px;line-height:1.7;font-weight:300;animation:fadeUp 0.6s 0.2s ease both}
+.hero .ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.6s 0.3s ease both}
+
+/* Stats */
+.stats{padding:60px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stats-grid .num{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-1px;color:var(--text)}
+.stats-grid .num.accent{color:var(--accent)}
+.stats-grid .label{font-size:12px;color:var(--muted);font-weight:500;margin-top:4px;letter-spacing:0.5px}
+.stats-grid .source{font-family:var(--font-mono);font-size:9px;color:var(--dim);margin-top:6px}
+
+/* Features */
+.features{padding:100px 0}
+.section-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:12px}
+.section-title{font-family:var(--font-display);font-size:clamp(28px,3.5vw,42px);font-weight:700;letter-spacing:-1px;margin-bottom:16px}
+.section-sub{font-size:15px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:48px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 24px;transition:all 0.35s cubic-bezier(0.23,1,0.32,1)}
+.feature-card:hover{transform:translateY(-4px);border-color:rgba(0,229,160,0.2);box-shadow:0 16px 48px rgba(0,0,0,0.3)}
+.feature-card .icon{font-size:28px;margin-bottom:16px}
+.feature-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* Market */
+.market{padding:100px 0;border-top:1px solid var(--border)}
+.market-banner{background:linear-gradient(135deg,rgba(0,229,160,0.06),rgba(251,191,36,0.04));border:1px solid var(--border);border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.market-banner h3{font-family:var(--font-display);font-size:28px;font-weight:700;margin-bottom:12px}
+.market-banner p{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px}
+.market-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.market-stat{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.market-stat .val{font-family:var(--font-display);font-size:32px;font-weight:800;color:var(--accent)}
+.market-stat .desc{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* Pricing */
+.pricing{padding:100px 0}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 24px;display:flex;flex-direction:column;transition:all 0.3s}
+.price-card.featured{border-color:rgba(0,229,160,0.3);box-shadow:0 0 60px rgba(0,229,160,0.06);position:relative}
+.price-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#06060b;font-size:10px;font-weight:700;padding:4px 14px;border-radius:100px;letter-spacing:1px}
+.price-card .tier{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
+.price-card .amount{font-family:var(--font-display);font-size:40px;font-weight:800;letter-spacing:-1px}
+.price-card .amount span{font-size:16px;font-weight:400;color:var(--muted)}
+.price-card .desc{font-size:13px;color:var(--muted);margin:8px 0 24px;line-height:1.5}
+.price-card ul{list-style:none;flex:1;margin-bottom:24px}
+.price-card li{font-size:13px;color:var(--muted);padding:6px 0;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.price-card li::before{content:'✓';color:var(--accent);font-size:12px;margin-top:2px;flex-shrink:0}
+.price-card .btn-primary,.price-card .btn-secondary{width:100%;justify-content:center;padding:12px}
+
+/* Email */
+.email-section{padding:80px 0;border-top:1px solid var(--border)}
+.email-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center}
+.email-box h3{font-family:var(--font-display);font-size:24px;font-weight:700;margin-bottom:8px}
+.email-box p{font-size:14px;color:var(--muted);margin-bottom:24px;max-width:440px;margin-left:auto;margin-right:auto}
+.email-form{display:flex;gap:8px;max-width:440px;margin:0 auto}
+.email-form input{flex:1;padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text);font-size:14px;font-family:var(--font-body);outline:none;transition:border-color 0.2s}
+.email-form input:focus{border-color:rgba(0,229,160,0.4)}
+.email-form input::placeholder{color:var(--dim)}
+
+/* FAQ */
+.faq{padding:100px 0}
+.faq-list{max-width:680px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+.faq-q{font-size:15px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);transition:color 0.2s}
+.faq-q:hover{color:var(--accent)}
+.faq-q .arrow{font-size:18px;color:var(--muted);transition:transform 0.3s}
+.faq-item.open .arrow{transform:rotate(45deg)}
+.faq-a{font-size:14px;color:var(--muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s;padding-top:0}
+.faq-item.open .faq-a{max-height:300px;padding-top:12px}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:40px 0}
+footer .inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+footer .legal{display:flex;gap:16px;flex-wrap:wrap}
+footer .legal a{font-size:12px;color:var(--dim);transition:color 0.2s}
+footer .legal a:hover{color:var(--accent)}
+footer .copy{font-size:11px;color:var(--dim)}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s cubic-bezier(0.23,1,0.32,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Mobile */
+@media(max-width:768px){
+  .hamburger{display:block}
+  nav .links{display:none;position:absolute;top:60px;left:0;right:0;background:rgba(6,6,11,0.97);backdrop-filter:blur(20px);flex-direction:column;padding:16px;border-bottom:1px solid var(--border)}
+  nav .links.open{display:flex}
+  nav .links a{padding:12px 16px;font-size:15px}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .features-grid{grid-template-columns:1fr}
+  .market-banner{grid-template-columns:1fr;padding:28px}
+  .pricing-grid{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+  .email-form{flex-direction:column}
+  .hero{padding:80px 0 60px}
+  footer .inner{flex-direction:column;text-align:center}
+}
+</style>
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Alethinx AI","description":"AI-powered acquisition intelligence platform with autonomous deal agents.","url":"https://alethinx.ai","applicationCategory":"BusinessApplication","operatingSystem":"Web","offers":{"@type":"AggregateOffer","lowPrice":"0","highPrice":"499","priceCurrency":"USD"}}
+</script>
+</head>
+<body>
+
+<div class="ambient"></div>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <a href="/" class="logo">Alethinx</a>
+    <div class="links" id="navLinks">
+      <a href="#features">Features</a>
+      <a href="#market">Market</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://app.alethinx.ai/auth" class="btn-secondary" style="margin-left:8px">Sign In</a>
+      <a href="https://app.alethinx.ai/auth" class="btn-primary">Start Free →</a>
+    </div>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero container">
+  <div class="badge"><span class="dot"></span> Autonomous Deal Intelligence Platform</div>
+  <h1>$250K+ passive income<br><span class="highlight">zero personal capital</span> at risk</h1>
+  <p>Alethinx AI agents source live deals, run 5-role board analysis, and structure zero-PG financing — so you acquire with confidence.</p>
+  <div class="ctas">
+    <a href="https://app.alethinx.ai/auth" class="btn-primary">Start Analyzing Deals →</a>
+    <a href="#features" class="btn-secondary">See How It Works</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid reveal">
+      <div><div class="num accent">$124T</div><div class="label">Wealth Changing Hands</div><div class="source">Cerulli Associates</div></div>
+      <div><div class="num">6M</div><div class="label">Businesses Need Owners</div><div class="source">McKinsey IEM, Feb 2026</div></div>
+      <div><div class="num accent">92%</div><div class="label">Close Without a Buyer</div><div class="source">McKinsey IEM</div></div>
+      <div><div class="num">$5T</div><div class="label">Enterprise Value at Stake</div><div class="source">McKinsey IEM</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features container" id="features">
+  <div class="reveal">
+    <div class="section-label">What Alethinx Does</div>
+    <div class="section-title">AI Agents That Acquire For You</div>
+    <div class="section-sub">Alethinx deploys specialized AI agents that handle every step of the acquisition process — from finding the deal to closing it.</div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal"><div class="icon">🔍</div><h3>AI Deal Sourcing</h3><p>Autonomous agents scan thousands of listings and off-market opportunities 24/7, scoring and ranking deals against your acquisition criteria.</p></div>
+    <div class="feature-card reveal"><div class="icon">🧠</div><h3>5-Role Board Analysis</h3><p>A full AI advisory board — CEO, CFO, CPA, Risk Analyst, Legal — analyzes every deal in under 60 seconds with a go/no-go verdict.</p></div>
+    <div class="feature-card reveal"><div class="icon">💰</div><h3>Zero-PG Financing</h3><p>Proprietary tools auto-generate financing structures combining SBA loans, seller financing, and earn-outs — zero personal guarantee required.</p></div>
+    <div class="feature-card reveal"><div class="icon">📊</div><h3>Passive Income Calculator</h3><p>Model your Year 1 passive income after debt service, management costs, and taxes — before you make an offer.</p></div>
+    <div class="feature-card reveal"><div class="icon">🏢</div><h3>Commercial Real Estate</h3><p>NNN, industrial, self-storage, medical office — AI-analyzed CRE deals with cap rate analysis and non-recourse structures.</p></div>
+    <div class="feature-card reveal"><div class="icon">⚡</div><h3>Real-Time Alerts</h3><p>Get notified instantly when a deal matches your criteria. Never miss a time-sensitive acquisition opportunity again.</p></div>
+  </div>
+</section>
+
+<!-- MARKET -->
+<section class="market container" id="market">
+  <div class="reveal">
+    <div class="section-label">Why Now</div>
+    <div class="section-title">The Greatest Wealth Transfer in History</div>
+    <div class="section-sub">Baby Boomers are retiring. $124 trillion is changing hands. 6 million businesses need new owners. 92% will close without intervention.</div>
+  </div>
+  <div class="market-banner reveal">
+    <div>
+      <h3>The Great Ownership Transfer</h3>
+      <p>McKinsey's February 2026 report confirms: 6 million small businesses face ownership transitions by 2035, representing $5 trillion in enterprise value. Most will close, not sell. Alethinx exists to change that — giving individual buyers the intelligence that PE firms have had for decades.</p>
+      <a href="https://app.alethinx.ai/market-opportunity" class="btn-primary" style="margin-top:8px">See the Full Market Data →</a>
+    </div>
+    <div class="market-stats">
+      <div class="market-stat"><div class="val">$79T</div><div class="desc">Boomer wealth handoff</div></div>
+      <div class="market-stat"><div class="val">1M+</div><div class="desc">Viable acquisition targets</div></div>
+      <div class="market-stat"><div class="val">$3T</div><div class="desc">New wealth if gaps close</div></div>
+      <div class="market-stat"><div class="val">12M</div><div class="desc">Jobs at stake</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing container" id="pricing">
+  <div class="reveal" style="text-align:center;margin-bottom:48px">
+    <div class="section-label">Pricing</div>
+    <div class="section-title">Start Free. Scale When Ready.</div>
+    <div class="section-sub" style="margin:12px auto 0">No credit card required. Upgrade anytime. Cancel anytime.</div>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card reveal">
+      <div class="tier">Free</div>
+      <div class="amount">$0<span> /forever</span></div>
+      <div class="desc">Explore the platform</div>
+      <ul>
+        <li>2 sample deals (Business + CRE)</li>
+        <li>Limited AI analysis preview</li>
+        <li>Market Opportunity data</li>
+        <li>Weekly deal alerts</li>
+      </ul>
+      <a href="https://app.alethinx.ai/auth" class="btn-secondary">Get Started</a>
+    </div>
+    <div class="price-card featured reveal">
+      <div class="tier" style="color:var(--accent)">Pro</div>
+      <div class="amount">$49<span> /month</span></div>
+      <div class="desc">Full deal intelligence</div>
+      <ul>
+        <li>Full deal pipeline (12+ deals)</li>
+        <li>AI Board analysis (5 roles)</li>
+        <li>Zero-PG financing playbooks</li>
+        <li>Real-time deal alerts</li>
+        <li>Passive income calculator</li>
+        <li>Deal comparison tools</li>
+      </ul>
+      <a href="https://app.alethinx.ai/auth" class="btn-primary">Start Pro →</a>
+    </div>
+    <div class="price-card reveal">
+      <div class="tier">Advisor</div>
+      <div class="amount">$199<span> /month</span></div>
+      <div class="desc">Autonomous AI agents</div>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>Autonomous deal sourcing agent</li>
+        <li>Auto-analysis on every deal</li>
+        <li>White-label deal reports</li>
+        <li>Priority alerts</li>
+        <li>Dedicated support</li>
+      </ul>
+      <a href="https://app.alethinx.ai/auth" class="btn-secondary">Start Advisor</a>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--dim)">
+    <strong style="color:var(--muted)">Enterprise ($499+/mo)</strong> — Custom agents, API access, team seats, security layer.
+    <a href="mailto:mark@alethinx.com" style="color:var(--accent);margin-left:4px">Contact us →</a>
+  </p>
+</section>
+
+<!-- EMAIL CAPTURE -->
+<section class="email-section">
+  <div class="container">
+    <div class="email-box reveal">
+      <h3>Get Early Access to New Features</h3>
+      <p>Join acquirers getting first access to new AI agents, deal alerts, and financing tools.</p>
+      <form class="email-form" id="emailForm" onsubmit="handleEmail(event)">
+        <input type="email" id="emailInput" placeholder="you@company.com" required>
+        <button type="submit" class="btn-primary">Join Waitlist →</button>
+      </form>
+      <p id="emailSuccess" style="display:none;color:var(--accent);font-size:13px;margin-top:12px">✓ You're on the list!</p>
+      <p style="font-size:10px;color:var(--dim);margin-top:12px">No spam. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq container" id="faq">
+  <div class="reveal" style="text-align:center;margin-bottom:48px">
+    <div class="section-label">FAQ</div>
+    <div class="section-title">Common Questions</div>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">What kind of deals does Alethinx source?<span class="arrow">+</span></div>
+      <div class="faq-a">Alethinx covers both business acquisitions (healthcare, IT/MSP, B2B services, F&B) and commercial real estate (NNN, industrial, self-storage, medical office). All deals are analyzed for passive income potential with zero personal guarantee financing.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">How does the AI Board Analysis work?<span class="arrow">+</span></div>
+      <div class="faq-a">Every deal is analyzed by a 5-member AI advisory board: CEO (strategy), CFO (financials), CPA (tax structure), Risk Analyst (downside), and Legal (deal structure). Each provides a specialized analysis, then a synthesized Board Verdict gives a go/no-go recommendation — all in under 60 seconds.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">What does "zero personal guarantee" mean?<span class="arrow">+</span></div>
+      <div class="faq-a">Traditional business acquisitions often require you to personally guarantee the debt. Alethinx structures deals using combinations of SBA loans, seller financing, and earn-outs that minimize or eliminate personal financial risk — so your personal assets are never on the line.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Can I try it before paying?<span class="arrow">+</span></div>
+      <div class="faq-a">Yes. The free tier includes 2 sample deals with limited AI analysis, plus full access to market data. No credit card required. Upgrade to Pro ($49/mo) when you're ready for the full deal pipeline and unlimited AI Board analysis.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Who is Alethinx for?<span class="arrow">+</span></div>
+      <div class="faq-a">First-time acquirers, search fund operators, independent sponsors, and CRE investors who want institutional-grade deal intelligence without hiring a full advisory team. If you're targeting $250K+ in passive income through business or property acquisition, Alethinx is built for you.</div>
+    </div>
+    <div class="faq-item" onclick="this.classList.toggle('open')">
+      <div class="faq-q">Why $124 trillion? What's the market opportunity?<span class="arrow">+</span></div>
+      <div class="faq-a">According to Cerulli Associates and McKinsey, the Baby Boomer generation will transfer $124 trillion in wealth by 2048. 6 million small businesses need new owners by 2035. Currently 92% of business exits end in closure — not sale. This is the largest ownership transition in modern history, and Alethinx is built to help individual buyers participate in it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:100px 0;text-align:center;position:relative">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,229,160,0.03),transparent);pointer-events:none"></div>
+  <div class="container reveal">
+    <div class="section-label">Get Started</div>
+    <div class="section-title" style="margin-bottom:16px">Ready to Acquire Your First Deal?</div>
+    <p style="font-size:15px;color:var(--muted);max-width:480px;margin:0 auto 32px;line-height:1.7">Join acquirers using Alethinx to source, analyze, and close deals with zero personal capital at risk.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="https://app.alethinx.ai/auth" class="btn-primary">Start Free — No Card Required →</a>
+      <a href="https://app.alethinx.ai/business-acquisition" class="btn-secondary">Browse Live Deals</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="inner">
+      <div>
+        <span style="color:var(--accent);font-weight:700;font-size:14px">Alethinx</span>
+        <div class="copy" style="margin-top:4px">© 2026 Alethinx AI. All rights reserved. Proprietary and confidential.</div>
+      </div>
+      <div class="legal">
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="mailto:mark@alethinx.com">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Email form
+function handleEmail(e) {
+  e.preventDefault();
+  document.getElementById('emailSuccess').style.display = 'block';
+  document.getElementById('emailForm').style.display = 'none';
+}
+</script>
+</body>
+</html>
