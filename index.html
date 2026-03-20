@@ -1,1109 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alethinx AI — The Intelligence Layer for Business Acquisitions</title>
-  <meta name="description" content="4 autonomous AI engines that source, score, structure, and close business acquisitions and commercial real estate deals — powered by NVIDIA NeMo technology.">
-  <!-- Open Graph -->
-  <meta property="og:title" content="Alethinx AI — The Intelligence Layer for Business Acquisitions">
-  <meta property="og:description" content="4 autonomous AI engines that source, score, structure, and close business acquisitions and commercial real estate deals — autonomously. Powered by NVIDIA NeMo.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://alethinx.ai">
-  <meta property="og:image" content="https://alethinx.ai/og-image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Alethinx AI — The Intelligence Layer for Business Acquisitions">
-  <meta name="twitter:description" content="4 autonomous AI engines for deal intelligence. Powered by NVIDIA NeMo.">
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    /* ── RESET & BASE ─────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #ffffff;
-      color: #0f172a;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
-    ul { list-style: none; }
-
-    /* ── CSS VARIABLES ───────────────────────────────────── */
-    :root {
-      --navy:       #0f172a;
-      --navy-2:     #f8fafc;
-      --navy-3:     #ffffff;
-      --navy-4:     #f1f5f9;
-      --teal:       #7c3aed;
-      --teal-light: #8b5cf6;
-      --teal-dim:   #6d28d9;
-      --gold:       #f5a623;
-      --gold-dim:   #c27d12;
-      --white:      #ffffff;
-      --text-1:     #0f172a;
-      --text-2:     #475569;
-      --text-3:     #94a3b8;
-      --border:     #e2e8f0;
-      --border-2:   rgba(124,58,237,0.25);
-      --radius:     12px;
-      --radius-lg:  20px;
-    }
-
-    /* ── UTILITY ─────────────────────────────────────────── */
-    .container { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-    .tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 100px;
-      border: 1px solid var(--border-2); color: var(--teal);
-      background: rgba(0,168,150,0.08);
-    }
-    .tag-gold {
-      border-color: rgba(245,166,35,0.3); color: var(--gold);
-      background: rgba(245,166,35,0.08);
-    }
-
-    /* ── LOADING SCREEN ──────────────────────────────────── */
-    #loader {
-      position: fixed; inset: 0; background: #ffffff; z-index: 9999;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 16px; transition: opacity 0.4s ease;
-    }
-    #loader.hidden { opacity: 0; pointer-events: none; }
-    .loader-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800; letter-spacing: 0.15em; color: var(--teal); }
-    .loader-bar { width: 120px; height: 2px; background: #ffffff; border-radius: 2px; overflow: hidden; }
-    .loader-fill { height: 100%; background: var(--teal); width: 0; animation: load 0.8s ease forwards; }
-    @keyframes load { to { width: 100%; } }
-
-    /* ── NAV ─────────────────────────────────────────────── */
-    #nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
-      border-bottom: 1px solid #e2e8f0;
-      transition: background 0.3s;
-    }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800;
-      letter-spacing: 0.08em; color: #0f172a;
-    }
-    .nav-logo-ax {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: var(--teal); display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 800; color: var(--navy); letter-spacing: 0;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 32px;
-    }
-    .nav-links a {
-      font-size: 14px; font-weight: 500; color: #475569;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: #0f172a; }
-    .nav-actions { display: flex; align-items: center; gap: 12px; }
-    .btn-ghost {
-      font-size: 14px; font-weight: 500; color: #475569;
-      padding: 8px 16px; border-radius: 8px;
-      border: 1px solid var(--border); transition: all 0.2s;
-    }
-    .btn-ghost:hover { color: #0f172a; border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
-    .btn-primary {
-      font-size: 14px; font-weight: 600; color: var(--navy);
-      padding: 9px 20px; border-radius: 8px;
-      background: var(--teal); transition: all 0.2s;
-      display: inline-flex; align-items: center; gap: 6px;
-    }
-    .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
-    /* hamburger */
-    .nav-burger {
-      display: none; flex-direction: column; gap: 5px;
-      width: 36px; height: 36px; align-items: center; justify-content: center;
-      border-radius: 8px; border: 1px solid var(--border);
-      transition: background 0.2s;
-    }
-    .nav-burger:hover { background: #ffffff; }
-    .nav-burger span {
-      display: block; width: 18px; height: 2px;
-      background: var(--text-2); border-radius: 2px;
-      transition: transform 0.25s, opacity 0.25s;
-      transform-origin: center;
-    }
-    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-burger.open span:nth-child(2) { opacity: 0; }
-    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    /* mobile menu */
-    #mobile-menu {
-      display: none; position: absolute; top: 64px; left: 0; right: 0;
-      background: rgba(255,255,255,0.98); backdrop-filter: blur(16px);
-      border-bottom: 1px solid #e2e8f0; padding: 20px 24px 24px;
-      flex-direction: column; gap: 4px;
-    }
-    #mobile-menu.open { display: flex; }
-    #mobile-menu a {
-      font-size: 16px; font-weight: 500; color: #475569;
-      padding: 12px 0; border-bottom: 1px solid #e2e8f0;
-      transition: color 0.2s;
-    }
-    #mobile-menu a:last-child { border-bottom: none; }
-    #mobile-menu a:hover { color: #0f172a; }
-    .mobile-ctas { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
-    .mobile-ctas .btn-ghost, .mobile-ctas .btn-primary { text-align: center; width: 100%; justify-content: center; }
-
-    /* ── HERO ────────────────────────────────────────────── */
-    #hero {
-      min-height: 100vh; display: flex; align-items: center;
-      padding: 120px 0 80px;
-      position: relative; overflow: hidden;
-    }
-    .hero-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(0,168,150,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,168,150,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 30%, transparent 80%);
-    }
-    .hero-glow {
-      position: absolute; width: 600px; height: 600px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,168,150,0.12) 0%, transparent 70%);
-      top: -100px; right: -100px; pointer-events: none;
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 780px; }
-    .hero-eyebrow { margin-bottom: 20px; }
-    .hero-h1 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(36px, 5vw, 62px);
-      font-weight: 800; line-height: 1.08;
-      letter-spacing: -0.02em; color: #0f172a;
-      margin-bottom: 24px;
-    }
-    .hero-h1 .accent { color: var(--teal); }
-    .hero-sub {
-      font-size: clamp(16px, 2vw, 19px); color: #475569;
-      line-height: 1.7; max-width: 600px; margin-bottom: 40px;
-    }
-    .hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 60px; }
-    .btn-hero {
-      font-size: 16px; font-weight: 600; color: var(--navy);
-      padding: 14px 28px; border-radius: 10px;
-      background: var(--teal); transition: all 0.2s;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-    .btn-hero:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,168,150,0.3); }
-    .btn-hero-ghost {
-      font-size: 16px; font-weight: 500; color: #475569;
-      padding: 14px 24px; border-radius: 10px;
-      border: 1px solid var(--border); transition: all 0.2s;
-    }
-    .btn-hero-ghost:hover { color: #0f172a; border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
-    /* stats */
-    .hero-stats {
-      display: grid; grid-template-columns: repeat(4,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .stat-cell {
-      background: #f8fafc; padding: 20px 18px;
-    }
-    .stat-num {
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800;
-      color: var(--teal); line-height: 1; margin-bottom: 4px;
-    }
-    .stat-num.gold { color: var(--gold); }
-    .stat-label { font-size: 12px; color: #94a3b8; line-height: 1.4; }
-    .stat-source { font-size: 10px; color: #94a3b8; opacity: 0.6; margin-top: 2px; }
-
-    /* ── NVIDIA SECTION ──────────────────────────────────── */
-    #nvidia {
-      padding: 28px 0;
-      background: linear-gradient(135deg, rgba(118,185,0,0.06) 0%, rgba(0,168,150,0.08) 100%);
-      border-top: 1px solid rgba(118,185,0,0.15);
-      border-bottom: 1px solid rgba(118,185,0,0.15);
-    }
-    .nvidia-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 24px; flex-wrap: wrap;
-    }
-    .nvidia-left { display: flex; align-items: center; gap: 16px; }
-    .nvidia-badge {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 16px; border-radius: 10px;
-      background: rgba(118,185,0,0.1); border: 1px solid rgba(118,185,0,0.25);
-    }
-    .nvidia-square {
-      width: 28px; height: 28px; background: #76b900; border-radius: 5px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 10px; font-weight: 800; color: #000; letter-spacing: 0.05em; font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    .nvidia-text { font-size: 13px; font-weight: 600; color: #a8d444; }
-    .nvidia-desc { font-size: 14px; color: #475569; max-width: 520px; line-height: 1.5; }
-    .nvidia-desc strong { color: #0f172a; }
-    .nvidia-chips {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    }
-    .nchip {
-      font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px;
-      background: rgba(118,185,0,0.08); border: 1px solid rgba(118,185,0,0.2); color: #8bc34a;
-    }
-
-    /* ── SECTION HEADERS ─────────────────────────────────── */
-    .section { padding: 96px 0; }
-    .section-alt { background: #f8fafc; }
-    .section-header { text-align: center; max-width: 640px; margin: 0 auto 64px; }
-    .section-tag { margin-bottom: 16px; }
-    .section-h2 {
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 800; line-height: 1.12; letter-spacing: -0.02em;
-      color: #0f172a; margin-bottom: 16px;
-    }
-    .section-sub { font-size: 17px; color: #475569; line-height: 1.65; }
-
-    /* ── ENGINE CARDS ────────────────────────────────────── */
-    .engines-grid {
-      display: grid; grid-template-columns: repeat(2,1fr); gap: 20px;
-      margin-bottom: 16px;
-    }
-    .engine-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 32px;
-      transition: border-color 0.25s, transform 0.25s;
-      position: relative; overflow: hidden;
-    }
-    .engine-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--teal), transparent);
-      opacity: 0; transition: opacity 0.25s;
-    }
-    .engine-card:hover { border-color: var(--border-2); transform: translateY(-3px); }
-    .engine-card:hover::before { opacity: 1; }
-    .engine-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: rgba(0,168,150,0.12); border: 1px solid rgba(0,168,150,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; margin-bottom: 20px;
-    }
-    .engine-badge {
-      position: absolute; top: 20px; right: 20px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 3px 8px; border-radius: 4px;
-      background: rgba(0,168,150,0.1); border: 1px solid rgba(0,168,150,0.2); color: var(--teal);
-    }
-    .engine-name {
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700;
-      color: #0f172a; margin-bottom: 6px;
-    }
-    .engine-type { font-size: 12px; color: var(--teal); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px; }
-    .engine-desc { font-size: 14px; color: #475569; line-height: 1.65; }
-    /* features sub-section */
-    .features-divider {
-      display: flex; align-items: center; gap: 16px; margin: 32px 0 20px;
-    }
-    .features-divider-line { flex: 1; height: 1px; background: var(--border); }
-    .features-divider-text { font-size: 12px; font-weight: 600; color: #94a3b8; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
-    .features-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
-    .feature-card {
-      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 20px;
-      display: flex; align-items: flex-start; gap: 14px;
-    }
-    .feature-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
-    .feature-name { font-size: 15px; font-weight: 600; color: #0f172a; margin-bottom: 4px; }
-    .feature-desc { font-size: 13px; color: #94a3b8; line-height: 1.5; }
-
-    /* ── MARKET SECTION ──────────────────────────────────── */
-    .market-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .market-content .section-header { text-align: left; margin-bottom: 32px; }
-    .market-content .section-sub { text-align: left; }
-    .market-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
-    .market-stat {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 20px 18px;
-    }
-    .market-stat-num {
-      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800;
-      color: var(--gold); line-height: 1; margin-bottom: 6px;
-    }
-    .market-stat-label { font-size: 13px; color: #475569; }
-    .market-visual {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 32px;
-    }
-    .market-visual-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 24px; }
-    .market-bar-item { margin-bottom: 18px; }
-    .market-bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .market-bar-label { font-size: 13px; color: #475569; }
-    .market-bar-val { font-size: 13px; font-weight: 600; color: var(--teal); }
-    .market-bar-track { height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden; }
-    .market-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); }
-
-    /* ── PRICING ─────────────────────────────────────────── */
-    #pricing { padding: 96px 0; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; max-width: 980px; margin: 0 auto; }
-    .pricing-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 36px 32px;
-      display: flex; flex-direction: column; position: relative; overflow: hidden;
-      transition: border-color 0.25s, transform 0.25s;
-    }
-    .pricing-card:hover { transform: translateY(-4px); }
-    .pricing-card.featured {
-      border-color: var(--teal); background: linear-gradient(145deg, rgba(0,168,150,0.08) 0%, var(--navy-3) 60%);
-    }
-    .pricing-card.featured::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: var(--teal);
-    }
-    .pricing-badge {
-      position: absolute; top: -1px; right: 24px;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 5px 14px; border-radius: 0 0 8px 8px;
-      background: var(--teal); color: var(--navy);
-    }
-    .pricing-tier { font-size: 13px; font-weight: 600; color: #94a3b8; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
-    .pricing-price { margin-bottom: 6px; display: flex; align-items: baseline; gap: 4px; }
-    .pricing-price-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 42px; font-weight: 800; color: #0f172a; line-height: 1; }
-    .pricing-price-per { font-size: 15px; color: #94a3b8; }
-    .pricing-original { font-size: 13px; color: #94a3b8; text-decoration: line-through; margin-bottom: 4px; }
-    .pricing-founding {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 600; color: var(--gold);
-      padding: 4px 10px; border-radius: 6px;
-      background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.2);
-      margin-bottom: 20px;
-    }
-    .pricing-founding .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
-    .pricing-desc { font-size: 14px; color: #475569; margin-bottom: 28px; line-height: 1.5; min-height: 40px; }
-    .pricing-features { flex: 1; margin-bottom: 28px; }
-    .pricing-feat {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 14px; color: #475569; padding: 7px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .pricing-feat:last-child { border-bottom: none; }
-    .check { color: var(--teal); font-size: 13px; flex-shrink: 0; margin-top: 2px; font-weight: 700; }
-    .pricing-cta {
-      display: block; text-align: center; font-weight: 600; font-size: 15px;
-      padding: 13px; border-radius: 10px; transition: all 0.2s;
-    }
-    .pricing-cta.teal { background: var(--teal); color: var(--navy); }
-    .pricing-cta.teal:hover { background: var(--teal-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,168,150,0.3); }
-    .pricing-cta.outline {
-      border: 1px solid var(--border); color: #475569;
-    }
-    .pricing-cta.outline:hover { border-color: rgba(255,255,255,0.25); color: #0f172a; background: rgba(255,255,255,0.04); }
-    .pricing-note { text-align: center; font-size: 13px; color: #94a3b8; margin-top: 28px; }
-
-    /* ── FAQ ─────────────────────────────────────────────── */
-    .faq-list { max-width: 740px; margin: 0 auto; }
-    .faq-item {
-      border-bottom: 1px solid #e2e8f0;
-    }
-    .faq-q {
-      width: 100%; display: flex; align-items: center; justify-content: space-between;
-      gap: 16px; padding: 20px 0; font-size: 16px; font-weight: 500; color: #0f172a;
-      text-align: left; background: none; transition: color 0.2s;
-    }
-    .faq-q:hover { color: var(--teal); }
-    .faq-arrow {
-      width: 24px; height: 24px; border-radius: 50%;
-      border: 1px solid var(--border); flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; color: #94a3b8;
-      transition: transform 0.25s, border-color 0.25s, color 0.25s;
-    }
-    .faq-item.open .faq-arrow { transform: rotate(45deg); border-color: var(--teal); color: var(--teal); }
-    .faq-a { display: none; padding: 0 0 20px; font-size: 15px; color: #475569; line-height: 1.7; }
-    .faq-item.open .faq-a { display: block; }
-
-    /* ── WAITLIST SECTION ────────────────────────────────── */
-    #waitlist {
-      padding: 80px 0;
-      background: linear-gradient(135deg, var(--navy-2) 0%, rgba(0,168,150,0.05) 100%);
-      border-top: 1px solid var(--border); border-bottom: 1px solid #e2e8f0;
-    }
-    .waitlist-inner { text-align: center; max-width: 560px; margin: 0 auto; }
-    .waitlist-h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 12px; }
-    .waitlist-sub { font-size: 16px; color: #475569; margin-bottom: 32px; }
-    .waitlist-form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto; }
-    .waitlist-input {
-      flex: 1; padding: 13px 16px; border-radius: 10px;
-      border: 1px solid var(--border); background: #ffffff; color: #0f172a;
-      font-size: 15px; font-family: inherit; transition: border-color 0.2s; outline: none;
-    }
-    .waitlist-input:focus { border-color: var(--teal); }
-    .waitlist-input::placeholder { color: #94a3b8; }
-    .waitlist-submit {
-      padding: 13px 22px; border-radius: 10px; background: var(--teal);
-      color: var(--navy); font-size: 15px; font-weight: 600;
-      border: none; cursor: pointer; transition: all 0.2s; white-space: nowrap;
-    }
-    .waitlist-submit:hover { background: var(--teal-light); }
-    .waitlist-success {
-      display: none; font-size: 15px; color: var(--teal); font-weight: 500; margin-top: 12px;
-    }
-    .waitlist-success.show { display: block; }
-    .waitlist-note { font-size: 12px; color: #94a3b8; margin-top: 14px; }
-
-    /* ── CTA SECTION ─────────────────────────────────────── */
-    #cta { padding: 100px 0; text-align: center; }
-    .cta-h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 4vw, 50px); font-weight: 800; color: #0f172a; margin-bottom: 16px; line-height: 1.1; }
-    .cta-sub { font-size: 18px; color: #475569; margin-bottom: 40px; max-width: 500px; margin-left: auto; margin-right: auto; }
-    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-    /* ── FOOTER ──────────────────────────────────────────── */
-    footer {
-      background: #f8fafc; border-top: 1px solid var(--border);
-      padding: 48px 0 32px;
-    }
-    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
-    .footer-brand-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-    .footer-tagline { font-size: 14px; color: #94a3b8; line-height: 1.6; max-width: 300px; margin-bottom: 16px; }
-    .footer-ip {
-      font-size: 12px; color: #94a3b8; line-height: 1.7;
-      padding: 12px 14px; border-radius: 8px;
-      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-    }
-    .footer-col-title { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; margin-bottom: 16px; }
-    .footer-col a { display: block; font-size: 14px; color: #475569; padding: 5px 0; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--teal); }
-    .footer-bottom {
-      padding-top: 24px; border-top: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
-    }
-    .footer-legal { font-size: 12px; color: #94a3b8; }
-    .footer-founder { font-size: 12px; color: #94a3b8; }
-    .footer-founder a { color: var(--teal); }
-
-    /* ── RESPONSIVE ──────────────────────────────────────── */
-    @media (max-width: 1024px) {
-      .market-layout { grid-template-columns: 1fr; gap: 40px; }
-      .market-content .section-header { max-width: 100%; }
-      .footer-top { grid-template-columns: 1fr 1fr; }
-      .footer-top > :first-child { grid-column: 1/-1; }
-    }
-    @media (max-width: 768px) {
-      .nav-links, .nav-actions { display: none; }
-      .nav-burger { display: flex; }
-      .engines-grid { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
-      .hero-stats { grid-template-columns: repeat(2,1fr); }
-      .market-stats-grid { grid-template-columns: 1fr 1fr; }
-      .footer-top { grid-template-columns: 1fr; }
-      .footer-top > :first-child { grid-column: auto; }
-      .waitlist-form { flex-direction: column; }
-    }
-    @media (max-width: 480px) {
-      .container { padding: 0 16px; }
-      .hero-stats { grid-template-columns: 1fr 1fr; }
-      .stat-num { font-size: 22px; }
-      .market-bar-item:nth-child(n+4) { display: none; }
-      .nvidia-inner { flex-direction: column; align-items: flex-start; }
-      .footer-bottom { flex-direction: column; align-items: flex-start; }
-    }
-
-    /* ── ANIMATIONS ──────────────────────────────────────── */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-    .fade-delay-1 { transition-delay: 0.1s; }
-    .fade-delay-2 { transition-delay: 0.2s; }
-    .fade-delay-3 { transition-delay: 0.3s; }
-    .fade-delay-4 { transition-delay: 0.4s; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alethinx AI — Autonomous AI Agents for Deal Intelligence</title>
+<meta name="description" content="4 proprietary AI engines that source, score, structure, and close business acquisitions and commercial real estate deals — autonomously.">
+<meta property="og:title" content="Alethinx AI — Autonomous AI Agents for Deal Intelligence">
+<meta property="og:description" content="No dashboards. No manual analysis. Just AI agents that work for you.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alethinx.ai">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://alethinx.ai">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#faf9fb;--white:#fff;--surface:#f4f2f7;--fg:#1a1a2e;--secondary:#6b6b80;--dim:#9b9baf;--primary:#7c3aed;--primary-lt:#8b5cf6;--primary-bg:rgba(124,58,237,0.06);--primary-bdr:rgba(124,58,237,0.15);--primary-glow:rgba(124,58,237,0.2);--bdr:#e8e5ee;--bdr-lt:#f0edf5;--shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 12px rgba(0,0,0,0.03)}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(124,58,237,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(124,58,237,0.04) 0%,transparent 50%)}
+.ctn{max-width:1200px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+@media(min-width:640px){.ctn{padding:0 32px}}
+nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr-lt)}
+nav .in{display:flex;align-items:center;justify-content:space-between;height:56px;max-width:1200px;margin:0 auto;padding:0 20px;gap:8px}
+@media(min-width:640px){nav .in{height:64px;padding:0 32px}}
+nav .logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:var(--primary);letter-spacing:-0.02em;text-transform:uppercase;white-space:nowrap}
+nav .logo svg{width:20px;height:20px}
+nav .nl{display:flex;align-items:center;gap:2px}
+nav .nl a{padding:6px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--secondary);transition:all 0.15s;white-space:nowrap}
+nav .nl a:hover{color:var(--primary);background:var(--primary-bg)}
+nav .nr{display:flex;align-items:center;gap:8px}
+.bd{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:var(--primary);color:#fff;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.bd:hover{background:var(--primary-lt);box-shadow:0 4px 16px var(--primary-glow)}
+.bs{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;border:1px solid var(--bdr);background:var(--white);color:var(--fg);font-size:13px;font-weight:500;font-family:inherit;cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.bs:hover{border-color:var(--primary-bdr);color:var(--primary)}
+.bp{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:12px;background:var(--primary);color:#fff;font-size:15px;font-weight:600;font-family:inherit;border:none;cursor:pointer;box-shadow:0 4px 20px var(--primary-glow);transition:all 0.2s}
+.bp:hover{background:var(--primary-lt);transform:translateY(-1px);box-shadow:0 8px 28px var(--primary-glow)}
+.bsl{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;border-radius:12px;border:1px solid var(--bdr);background:var(--white);color:var(--fg);font-size:15px;font-weight:500;font-family:inherit;cursor:pointer;transition:all 0.2s}
+.bsl:hover{border-color:var(--primary-bdr);color:var(--primary)}
+.hm{display:none;background:none;border:none;color:var(--secondary);cursor:pointer;font-size:22px;padding:4px}
+@media(max-width:1024px){.hm{display:block}nav .nl{display:none;position:absolute;top:56px;left:0;right:0;background:rgba(255,255,255,0.97);backdrop-filter:blur(20px);flex-direction:column;padding:16px 20px;border-bottom:1px solid var(--bdr-lt);gap:2px}nav .nl.open{display:flex}nav .nl a{padding:10px 16px;font-size:15px}.bd span,.bs span{display:none}}
+.hero{position:relative;display:flex;min-height:calc(100svh - 64px);flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;overflow:hidden;text-align:center}
+@media(min-width:640px){.hero{padding:80px 32px}}
+.hero .lb{margin-bottom:20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--primary);opacity:0;animation:fu 0.6s ease forwards}
+@media(min-width:640px){.hero .lb{font-size:13px;letter-spacing:0.25em;margin-bottom:24px}}
+.hero h1{font-size:clamp(36px,5.5vw,68px);font-weight:900;line-height:1.08;letter-spacing:-0.035em;color:var(--fg);margin-bottom:24px;opacity:0;animation:fu 0.6s 0.1s ease forwards;max-width:800px}
+.hero .sb{max-width:600px;margin:0 auto 12px;font-size:16px;line-height:1.7;color:var(--secondary);opacity:0;animation:fu 0.6s 0.2s ease forwards}
+@media(min-width:640px){.hero .sb{font-size:18px}}
+.hero .sa{color:var(--primary);font-weight:600;font-style:italic;font-size:15px;margin-bottom:36px;opacity:0;animation:fu 0.6s 0.25s ease forwards}
+@media(min-width:640px){.hero .sa{font-size:16px;margin-bottom:44px}}
+.hero .ct{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fu 0.6s 0.3s ease forwards}
+.sec{padding:80px 0}@media(min-width:640px){.sec{padding:112px 0}}
+.sl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--primary);margin-bottom:12px}
+.st{font-size:clamp(26px,3.5vw,40px);font-weight:800;letter-spacing:-0.03em;color:var(--fg)}
+.ss{font-size:15px;color:var(--secondary);max-width:560px;line-height:1.7;margin-top:12px}
+.stats{padding:48px 0;border-top:1px solid var(--bdr-lt);border-bottom:1px solid var(--bdr-lt);background:var(--white)}
+@media(min-width:640px){.stats{padding:64px 0}}
+.sg{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;text-align:center}
+@media(min-width:768px){.sg{grid-template-columns:repeat(4,1fr)}}
+.sg .v{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-0.03em;color:var(--primary)}
+.sg .l{font-size:12px;font-weight:600;color:var(--secondary);margin-top:4px}
+.sg .s{font-size:10px;color:var(--dim);margin-top:4px;font-family:monospace}
+.fg{display:grid;grid-template-columns:1fr;gap:16px;margin-top:48px}
+@media(min-width:768px){.fg{grid-template-columns:repeat(3,1fr);gap:20px}}
+.fc{background:var(--white);border:1px solid var(--bdr);border-radius:16px;padding:28px 24px;box-shadow:var(--shadow);transition:all 0.3s cubic-bezier(0.23,1,0.32,1)}
+.fc:hover{transform:translateY(-4px);border-color:var(--primary-bdr);box-shadow:0 8px 32px rgba(124,58,237,0.08)}
+.fc .iw{display:flex;height:44px;width:44px;align-items:center;justify-content:center;border-radius:12px;background:var(--primary-bg);margin-bottom:16px;font-size:22px}
+.fc h3{font-size:16px;font-weight:700;color:var(--fg);margin-bottom:4px}
+.fc .fl{font-size:13px;font-weight:600;color:var(--primary);margin-bottom:12px}
+.fc p{font-size:13px;color:var(--secondary);line-height:1.7}
+.mc{background:var(--white);border:1px solid var(--bdr);border-radius:20px;padding:32px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr;gap:32px}
+@media(min-width:768px){.mc{grid-template-columns:1fr 1fr;gap:40px;padding:48px}}
+.ms{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mi{background:var(--surface);border:1px solid var(--bdr-lt);border-radius:14px;padding:20px;text-align:center;transition:all 0.3s}
+.mi:hover{border-color:var(--primary-bdr)}
+.mi .mv{font-size:28px;font-weight:800;color:var(--primary);letter-spacing:-0.03em}
+.mi .md{font-size:11px;color:var(--secondary);margin-top:4px}
+.pg{display:grid;grid-template-columns:1fr;gap:16px;max-width:420px;margin:0 auto}
+@media(min-width:768px){.pg{grid-template-columns:repeat(3,1fr);max-width:none;gap:20px}}
+.pc{background:var(--white);border:1px solid var(--bdr);border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:all 0.3s}
+.pc.ft{border:2px solid var(--primary);box-shadow:0 0 0 4px rgba(124,58,237,0.08);position:relative}
+.pc.ft .pp{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:4px 16px;border-radius:100px;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.pc .pt{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:8px}
+.pc .pa{font-size:36px;font-weight:800;letter-spacing:-0.03em;color:var(--fg)}.pc .pa span{font-size:14px;font-weight:400;color:var(--secondary)}
+.pc .pd{font-size:13px;color:var(--secondary);margin:8px 0 20px}
+.pc ul{list-style:none;flex:1;margin-bottom:24px}
+.pc li{font-size:13px;color:var(--secondary);padding:5px 0;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pc li::before{content:'✓';color:var(--primary);font-weight:700;font-size:13px;flex-shrink:0;margin-top:1px}
+.pc .bp,.pc .bsl{width:100%;padding:12px;font-size:14px}
+.es{padding:64px 0;border-top:1px solid var(--bdr-lt)}
+.eb{background:var(--white);border:1px solid var(--bdr);border-radius:20px;padding:36px;text-align:center;box-shadow:var(--shadow)}
+@media(min-width:640px){.eb{padding:48px}}
+.eb h3{font-size:20px;font-weight:700;color:var(--fg);margin-bottom:8px}
+.eb>p{font-size:14px;color:var(--secondary);margin-bottom:24px;max-width:440px;margin-left:auto;margin-right:auto}
+.ef{display:flex;flex-direction:column;gap:8px;max-width:440px;margin:0 auto}
+@media(min-width:640px){.ef{flex-direction:row}}
+.ef input{flex:1;padding:12px 16px;border-radius:12px;border:1px solid var(--bdr);background:var(--white);color:var(--fg);font-size:14px;font-family:inherit;outline:none;transition:all 0.2s}
+.ef input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.1)}
+.ef input::placeholder{color:var(--dim)}
+.fl2{max-width:680px;margin:0 auto}
+.fi{border-bottom:1px solid var(--bdr-lt);padding:18px 0}
+.fq{font-size:15px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--fg);transition:color 0.2s;gap:12px}
+.fq:hover{color:var(--primary)}
+.fq .ar{color:var(--dim);transition:transform 0.3s;font-size:18px;flex-shrink:0}
+.fi.op .ar{transform:rotate(45deg)}
+.fa{font-size:14px;color:var(--secondary);line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.4s,padding 0.3s}
+.fi.op .fa{max-height:300px;padding-top:12px}
+.cs{position:relative;padding:96px 0;text-align:center;overflow:hidden}
+@media(min-width:640px){.cs{padding:128px 0}}
+.cs .gd{position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(124,58,237,0.06) 0%,transparent 70%);pointer-events:none}
+footer{border-top:1px solid var(--bdr-lt);padding:32px 0;background:var(--white)}
+@media(min-width:640px){footer{padding:48px 0}}
+footer .in{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;text-align:center;max-width:1200px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){footer .in{flex-direction:row;text-align:left;padding:0 32px}}
+footer .cp{font-size:12px;color:var(--dim)}
+footer .lg{display:flex;gap:16px}
+footer .lg a{font-size:12px;color:var(--dim);transition:color 0.2s}
+footer .lg a:hover{color:var(--primary)}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.rv{opacity:0;transform:translateY(24px);transition:all 0.6s cubic-bezier(0.23,1,0.32,1)}.rv.vi{opacity:1;transform:translateY(0)}
+</style>
 </head>
 <body>
+<div class="ambient"></div>
 
-  <!-- LOADER -->
-  <div id="loader">
-    <img src="logo.png" alt="Alethinx AI" style="width:52px;height:52px;border-radius:12px;object-fit:contain;">
-    <div class="loader-bar"><div class="loader-fill"></div></div>
-  </div>
+<nav><div class="in">
+<a href="/" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>ALETHINX AI</a>
+<div class="nl" id="nv">
+<a href="#features">AI Engines</a>
+<a href="https://app.alethinx.ai/business-acquisition">Business Acquisitions</a>
+<a href="https://app.alethinx.ai/commercial-real-estate">Commercial Real Estate</a>
+<a href="#pricing">Pricing</a>
+<a href="#market">Market Opportunity</a>
+</div>
+<div class="nr">
+<a href="https://app.alethinx.ai/auth" class="bd">🚀 <span>Deploy Agent</span></a>
+<a href="https://app.alethinx.ai/auth" class="bs">🔑 <span>Sign In</span></a>
+</div>
+<button class="hm" onclick="document.getElementById('nv').classList.toggle('open')" aria-label="Menu">☰</button>
+</div></nav>
 
-  <!-- NAV -->
-  <nav id="nav" role="navigation" aria-label="Main navigation">
-    <div class="container nav-inner">
-      <a href="/" class="nav-logo" aria-label="Alethinx AI Home">
-        <img src="logo.png" alt="Alethinx AI" style="width:34px;height:34px;border-radius:9px;object-fit:contain;" aria-hidden="true">
-        ALETHINX AI
-      </a>
-      <div class="nav-links">
-        <a href="#engines">AI Engines</a>
-        <a href="https://app.alethinx.ai/business-acquisition">Business Acquisitions</a>
-        <a href="https://app.alethinx.ai/commercial-real-estate">Commercial Real Estate</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#market">Market</a>
-      </div>
-      <div class="nav-actions">
-        <a href="https://app.alethinx.ai/auth" class="btn-ghost">Sign In</a>
-        <a href="https://app.alethinx.ai/auth" class="btn-primary">Deploy Agent →</a>
-      </div>
-      <button class="nav-burger" id="burger" aria-label="Toggle mobile menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" role="menu">
-      <a href="#engines" role="menuitem">AI Engines</a>
-      <a href="https://app.alethinx.ai/business-acquisition" role="menuitem">Business Acquisitions</a>
-      <a href="https://app.alethinx.ai/commercial-real-estate" role="menuitem">Commercial Real Estate</a>
-      <a href="#pricing" role="menuitem">Pricing</a>
-      <a href="#market" role="menuitem">Market Opportunity</a>
-      <div class="mobile-ctas">
-        <a href="https://app.alethinx.ai/auth" class="btn-ghost">Sign In</a>
-        <a href="https://app.alethinx.ai/auth" class="btn-primary">🚀 Deploy Agent — Free</a>
-      </div>
-    </div>
-  </nav>
+<section class="hero">
+<p class="lb">Agentic Deal Intelligence</p>
+<h1>Autonomous AI Agents<br>for Deal Intelligence</h1>
+<p class="sb">4 proprietary AI engines that source, score, structure, and close business acquisitions and commercial real estate deals — autonomously.</p>
+<p class="sa">No dashboards. No manual analysis. Just AI agents that work for you.</p>
+<div class="ct">
+<a href="https://app.alethinx.ai/auth" class="bp">Deploy Your First Deal Agent →</a>
+<a href="#features" class="bsl">View AI Engines</a>
+</div>
+</section>
 
-  <!-- HERO -->
-  <section id="hero" aria-label="Hero section">
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-eyebrow fade-in">
-          <span class="tag">Agentic Era · Era 3 · Deal Intelligence</span>
-        </div>
-        <h1 class="hero-h1 fade-in fade-delay-1">
-          The Intelligence Layer<br>for <span class="accent">Business Acquisitions</span>
-        </h1>
-        <p class="hero-sub fade-in fade-delay-2">
-          4 proprietary AI engines that source, score, structure, and close business acquisitions
-          and commercial real estate deals — autonomously, 24/7. No dashboards. No manual analysis.
-        </p>
-        <div class="hero-ctas fade-in fade-delay-3">
-          <a href="https://app.alethinx.ai/auth" class="btn-hero">
-            🚀 Deploy Your First Agent — Free
-          </a>
-          <a href="#engines" class="btn-hero-ghost">View AI Engines</a>
-        </div>
-        <div class="hero-stats fade-in fade-delay-4">
-          <div class="stat-cell">
-            <div class="stat-num">$5T</div>
-            <div class="stat-label">Enterprise value at stake</div>
-            <div class="stat-source">McKinsey IEM, Feb 2026</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">6M</div>
-            <div class="stat-label">Businesses need new owners</div>
-            <div class="stat-source">McKinsey IEM, Feb 2026</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num gold">92%</div>
-            <div class="stat-label">Close without a buyer</div>
-            <div class="stat-source">McKinsey IEM</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">$124T</div>
-            <div class="stat-label">Wealth changing hands</div>
-            <div class="stat-source">Cerulli Associates</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="stats"><div class="ctn"><div class="sg rv">
+<div><div class="v">$124T</div><div class="l">Wealth Changing Hands</div><div class="s">Cerulli Associates</div></div>
+<div><div class="v">6M</div><div class="l">Businesses Need Owners</div><div class="s">McKinsey IEM, Feb 2026</div></div>
+<div><div class="v">92%</div><div class="l">Close Without a Buyer</div><div class="s">McKinsey IEM</div></div>
+<div><div class="v">$5T</div><div class="l">Enterprise Value at Stake</div><div class="s">McKinsey IEM</div></div>
+</div></div></section>
 
-  <!-- NVIDIA ALIGNMENT BANNER -->
-  <div id="nvidia" aria-label="NVIDIA technology alignment">
-    <div class="container">
-      <div class="nvidia-inner">
-        <div class="nvidia-left">
-          <div class="nvidia-badge">
-            <div class="nvidia-square" aria-hidden="true">NV</div>
-            <span class="nvidia-text">NVIDIA Inception Aligned</span>
-          </div>
-          <p class="nvidia-desc">
-            Built for the <strong>NVIDIA Agentic AI Era</strong> — integrating
-            NeMo Agent Toolkit, Nemotron open models, NIM Microservices, and
-            Blackwell GPU infrastructure for enterprise-grade autonomous deal intelligence at scale.
-          </p>
-        </div>
-        <div class="nvidia-chips" aria-label="NVIDIA technologies used">
-          <span class="nchip">NeMo</span>
-          <span class="nchip">NIM</span>
-          <span class="nchip">Nemotron 3</span>
-          <span class="nchip">Blackwell</span>
-          <span class="nchip">OpenShell</span>
-          <span class="nchip">Dynamo 1.0</span>
-        </div>
-      </div>
-    </div>
-  </div>
+<section class="sec ctn" id="features">
+<div class="rv" style="text-align:center;margin-bottom:48px">
+<p class="sl">AI Engines</p><div class="st">4 Proprietary AI Engines</div>
+<p class="ss" style="margin:12px auto 0">Each engine handles a critical step of the acquisition process — working autonomously, 24/7.</p>
+</div>
+<div class="fg">
+<div class="fc rv"><div class="iw">🔍</div><h3>Deal Genie</h3><p class="fl">Sourcing Engine</p><p>Scans thousands of listings and off-market opportunities 24/7, scoring and ranking deals against your acquisition criteria automatically.</p></div>
+<div class="fc rv"><div class="iw">🧠</div><h3>AI Board</h3><p class="fl">Analysis Engine</p><p>5-member AI advisory board — CEO, CFO, CPA, Risk Analyst, Legal — analyzes every deal with a go/no-go verdict in under 60 seconds.</p></div>
+<div class="fc rv"><div class="iw">⚡</div><h3>Execution Agent</h3><p class="fl">Structuring Engine</p><p>Auto-generates zero-PG financing structures combining SBA loans, seller financing, and earn-outs. Outputs term sheets and LOI drafts.</p></div>
+<div class="fc rv"><div class="iw">📊</div><h3>Trade Audit</h3><p class="fl">Compliance Engine</p><p>Real-time deal monitoring, passive income projections, DSCR modeling, and cap rate analysis across your entire acquisition pipeline.</p></div>
+<div class="fc rv"><div class="iw">🏢</div><h3>CRE Intelligence</h3><p class="fl">Real Estate Engine</p><p>NNN, industrial, self-storage, medical office — AI-analyzed commercial real estate with non-recourse financing structures.</p></div>
+<div class="fc rv"><div class="iw">🔔</div><h3>Deal Alerts</h3><p class="fl">Notification Engine</p><p>Instant notifications when a deal matches your criteria. First movers win the best acquisitions — never miss a time-sensitive opportunity.</p></div>
+</div>
+</section>
 
-  <!-- AI ENGINES -->
-  <section id="engines" class="section" aria-label="AI Engines">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag"><span class="tag">4 Proprietary IP Engines</span></div>
-        <h2 class="section-h2">One Platform. Every Stage. Fully Autonomous.</h2>
-        <p class="section-sub">Each engine handles a critical step of the acquisition process —
-          working autonomously, 24/7. All 4 share data through a unified intelligence layer.</p>
-      </div>
-      <div class="engines-grid">
-        <!-- Deal Genie -->
-        <div class="engine-card fade-in">
-          <div class="engine-badge">Trade Secret + Patent</div>
-          <div class="engine-icon" aria-hidden="true">🔍</div>
-          <div class="engine-name">Deal Genie™</div>
-          <div class="engine-type">Sourcing &amp; Scoring Engine</div>
-          <p class="engine-desc">AI scoring engine (0–100) with DSCR analysis and zero-personal-guarantee financing structure optimization. Scans thousands of listings and off-market opportunities 24/7, scoring and ranking deals against your acquisition criteria automatically.</p>
-        </div>
-        <!-- AI Board -->
-        <div class="engine-card fade-in fade-delay-1">
-          <div class="engine-badge">Strongest Patent Claim</div>
-          <div class="engine-icon" aria-hidden="true">🧠</div>
-          <div class="engine-name">AI Board™</div>
-          <div class="engine-type">Investment Committee Engine</div>
-          <p class="engine-desc">5-persona investment committee simulation — CEO, CFO, CPA, Risk Analyst, Legal — with weighted consensus verdicts and dissent capture. No competitor has multi-agent IC simulation. Delivers a go/no-go verdict in under 60 seconds.</p>
-        </div>
-        <!-- Execution Agent -->
-        <div class="engine-card fade-in fade-delay-2">
-          <div class="engine-badge">Trade Secret + Patent</div>
-          <div class="engine-icon" aria-hidden="true">⚡</div>
-          <div class="engine-name">Execution Agent™</div>
-          <div class="engine-type">Autonomous Pipeline Engine</div>
-          <p class="engine-desc">6-agent autonomous pipeline: source, score, structure, generate content, outreach, documents. Auto-generates zero-PG financing structures combining SBA loans, seller financing, and earn-outs. Replaces an entire M&amp;A associate team.</p>
-        </div>
-        <!-- Trade Audit -->
-        <div class="engine-card fade-in fade-delay-3">
-          <div class="engine-badge">Trade Secret + Patent</div>
-          <div class="engine-icon" aria-hidden="true">📊</div>
-          <div class="engine-name">Trade Audit™</div>
-          <div class="engine-type">Compliance &amp; Monitoring Engine</div>
-          <p class="engine-desc">304-rule compliance engine across 7 regulatory frameworks — HIPAA, FDA, CMS, SBA, SEC, FINRA, and state law — with contradiction detection. Real-time deal monitoring, passive income projections, DSCR modeling, and cap rate analysis.</p>
-        </div>
-      </div>
+<section class="sec ctn" id="market" style="border-top:1px solid var(--bdr-lt)">
+<div class="rv" style="text-align:center;margin-bottom:48px">
+<p class="sl">Why Now</p><div class="st">The Greatest Wealth Transfer in History</div>
+</div>
+<div class="mc rv">
+<div>
+<h3 style="font-size:22px;font-weight:800;margin-bottom:12px">The Great Ownership Transfer</h3>
+<p style="font-size:14px;color:var(--secondary);line-height:1.7;margin-bottom:24px">McKinsey's February 2026 report confirms: 6 million small businesses face ownership transitions by 2035, representing $5 trillion in enterprise value. Most will close, not sell. Alethinx gives individual buyers the intelligence that PE firms have had for decades.</p>
+<a href="https://app.alethinx.ai/market-opportunity" class="bp" style="font-size:13px;padding:10px 24px">See Full Market Data →</a>
+</div>
+<div class="ms">
+<div class="mi"><div class="mv">$79T</div><div class="md">Boomer wealth handoff</div></div>
+<div class="mi"><div class="mv">1M+</div><div class="md">Viable acquisition targets</div></div>
+<div class="mi"><div class="mv">$3T</div><div class="md">New wealth if gaps close</div></div>
+<div class="mi"><div class="mv">12M</div><div class="md">Jobs at stake</div></div>
+</div>
+</div>
+</section>
 
-      <!-- Additional Features -->
-      <div class="features-divider">
-        <div class="features-divider-line"></div>
-        <span class="features-divider-text">Additional Intelligence Modules</span>
-        <div class="features-divider-line"></div>
-      </div>
-      <div class="features-grid">
-        <div class="feature-card fade-in">
-          <div class="feature-icon" aria-hidden="true">🏢</div>
-          <div>
-            <div class="feature-name">CRE Intelligence</div>
-            <p class="feature-desc">NNN, industrial, self-storage, medical office — AI-analyzed commercial real estate with non-recourse financing structures.</p>
-          </div>
-        </div>
-        <div class="feature-card fade-in fade-delay-1">
-          <div class="feature-icon" aria-hidden="true">🔔</div>
-          <div>
-            <div class="feature-name">Deal Alerts</div>
-            <p class="feature-desc">Instant notifications when a deal matches your criteria. First movers win the best acquisitions — never miss a time-sensitive opportunity.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="sec ctn" id="pricing">
+<div class="rv" style="text-align:center;margin-bottom:48px">
+<p class="sl">Pricing</p><div class="st">Deploy Your First Agent Free</div>
+<p class="ss" style="margin:12px auto 0">No credit card required. Upgrade when you're ready.</p>
+</div>
+<div class="pg">
+<div class="pc rv"><div class="pt">Free</div><div class="pa">$0<span> /forever</span></div><div class="pd">Explore the platform</div><ul><li>2 sample deals</li><li>Limited AI Board preview</li><li>Market Opportunity data</li><li>Weekly deal alerts</li></ul><a href="https://app.alethinx.ai/auth" class="bsl">Get Started</a></div>
+<div class="pc ft rv"><div class="pp">Most Popular</div><div class="pt" style="color:var(--primary)">Pro</div><div class="pa">$49<span> /month</span></div><div class="pd">Full deal intelligence</div><ul><li>Full deal pipeline (12+ deals)</li><li>AI Board analysis (5 roles)</li><li>Zero-PG financing playbooks</li><li>Real-time deal alerts</li><li>Passive income calculator</li></ul><a href="https://app.alethinx.ai/auth" class="bp">Start Pro →</a></div>
+<div class="pc rv"><div class="pt">Advisor</div><div class="pa">$199<span> /month</span></div><div class="pd">Autonomous AI agents</div><ul><li>Everything in Pro</li><li>Autonomous deal sourcing</li><li>Auto-analysis on every deal</li><li>White-label reports</li><li>Priority alerts + support</li></ul><a href="https://app.alethinx.ai/auth" class="bsl">Start Advisor</a></div>
+</div>
+<p style="text-align:center;margin-top:24px;font-size:12px;color:var(--dim)"><strong style="color:var(--secondary)">Enterprise ($499+/mo)</strong> — Custom agents, API, team seats. <a href="mailto:mark@alethinx.com" style="color:var(--primary)">Contact us →</a></p>
+</section>
 
-  <!-- MARKET OPPORTUNITY -->
-  <section id="market" class="section section-alt" aria-label="Market Opportunity">
-    <div class="container">
-      <div class="market-layout">
-        <div class="market-content">
-          <div class="section-header">
-            <div class="section-tag"><span class="tag">Why Now</span></div>
-            <h2 class="section-h2">The Greatest Wealth Transfer in History</h2>
-            <p class="section-sub">
-              McKinsey's February 2026 report confirms: 6 million small businesses face ownership
-              transitions by 2035, representing $5 trillion in enterprise value. 92% will close,
-              not sell. Alethinx gives individual buyers the intelligence PE firms have had for decades.
-            </p>
-          </div>
-          <div class="market-stats-grid">
-            <div class="market-stat fade-in">
-              <div class="market-stat-num">$4.9T</div>
-              <div class="market-stat-label">Global M&amp;A market 2025 (PitchBook record)</div>
-            </div>
-            <div class="market-stat fade-in fade-delay-1">
-              <div class="market-stat-num">$79T</div>
-              <div class="market-stat-label">Boomer wealth handoff underway</div>
-            </div>
-            <div class="market-stat fade-in fade-delay-2">
-              <div class="market-stat-num">1M+</div>
-              <div class="market-stat-label">Viable acquisition targets in market now</div>
-            </div>
-            <div class="market-stat fade-in fade-delay-3">
-              <div class="market-stat-num">12M</div>
-              <div class="market-stat-label">Jobs at stake if businesses close</div>
-            </div>
-          </div>
-          <p style="margin-top:24px;">
-            <a href="https://app.alethinx.ai/market-opportunity" class="btn-ghost" style="display:inline-block;">See Full Market Data →</a>
-          </p>
-        </div>
-        <div class="market-visual fade-in">
-          <div class="market-visual-title">Addressable Market Breakdown</div>
-          <div class="market-bar-item">
-            <div class="market-bar-header">
-              <span class="market-bar-label">SMB Ownership Transfer</span>
-              <span class="market-bar-val">$5T</span>
-            </div>
-            <div class="market-bar-track"><div class="market-bar-fill" style="width:100%"></div></div>
-          </div>
-          <div class="market-bar-item">
-            <div class="market-bar-header">
-              <span class="market-bar-label">Global M&amp;A Market (2025)</span>
-              <span class="market-bar-val">$4.9T</span>
-            </div>
-            <div class="market-bar-track"><div class="market-bar-fill" style="width:98%"></div></div>
-          </div>
-          <div class="market-bar-item">
-            <div class="market-bar-header">
-              <span class="market-bar-label">M&amp;A Advisory Tech (SAM)</span>
-              <span class="market-bar-val">$3.6B</span>
-            </div>
-            <div class="market-bar-track"><div class="market-bar-fill" style="width:72%"></div></div>
-          </div>
-          <div class="market-bar-item">
-            <div class="market-bar-header">
-              <span class="market-bar-label">Business Broker Software</span>
-              <span class="market-bar-val">$2.5B</span>
-            </div>
-            <div class="market-bar-track"><div class="market-bar-fill" style="width:50%"></div></div>
-          </div>
-          <div class="market-bar-item">
-            <div class="market-bar-header">
-              <span class="market-bar-label">PE Deal Sourcing Tools</span>
-              <span class="market-bar-val">$1.8B</span>
-            </div>
-            <div class="market-bar-track"><div class="market-bar-fill" style="width:36%"></div></div>
-          </div>
-          <div style="margin-top:24px; padding-top:20px; border-top: 1px solid var(--border);">
-            <div style="font-size:12px; color:var(--text-3); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em; font-weight:600;">Validation</div>
-            <div style="font-size:13px; color:var(--text-2); line-height:1.7;">
-              Datasite committed <strong style="color:var(--teal);">$500M</strong> to acquire AI deal intelligence companies. Intapp/DealCloud proves the category at <strong style="color:var(--teal);">$1.9B market cap</strong>.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="es"><div class="ctn"><div class="eb rv">
+<h3>Get Early Access to New AI Engines</h3>
+<p>Join acquirers getting first access to new agents, deal alerts, and financing tools.</p>
+<form class="ef" id="ef" onsubmit="he(event)"><input type="email" placeholder="you@company.com" required><button type="submit" class="bp" style="white-space:nowrap;font-size:14px;padding:12px 24px">Join Waitlist →</button></form>
+<p id="es" style="display:none;color:var(--primary);font-size:13px;margin-top:16px;font-weight:600">✓ You're on the list!</p>
+<p style="font-size:10px;color:var(--dim);margin-top:12px">No spam. Unsubscribe anytime.</p>
+</div></div></section>
 
-  <!-- PRICING -->
-  <section id="pricing" class="section" aria-label="Pricing plans">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag"><span class="tag">Pricing</span></div>
-        <h2 class="section-h2">Deploy Your First Agent Free</h2>
-        <p class="section-sub">No credit card required. Upgrade when you're ready to go full autonomous.</p>
-      </div>
+<section class="sec ctn" id="faq">
+<div class="rv" style="text-align:center;margin-bottom:48px"><p class="sl">FAQ</p><div class="st">Common Questions</div></div>
+<div class="fl2 rv">
+<div class="fi" onclick="this.classList.toggle('op')"><div class="fq">What kind of deals does Alethinx source?<span class="ar">+</span></div><div class="fa">Business acquisitions (healthcare, IT/MSP, B2B services, F&B) and commercial real estate (NNN, industrial, self-storage, medical office). All analyzed for passive income with zero-PG financing.</div></div>
+<div class="fi" onclick="this.classList.toggle('op')"><div class="fq">How does the AI Board Analysis work?<span class="ar">+</span></div><div class="fa">5 AI advisors — CEO, CFO, CPA, Risk Analyst, Legal — analyze every deal simultaneously, then synthesize a Board Verdict with go/no-go recommendation in under 60 seconds.</div></div>
+<div class="fi" onclick="this.classList.toggle('op')"><div class="fq">What does "zero personal guarantee" mean?<span class="ar">+</span></div><div class="fa">Alethinx structures deals using SBA loans, seller financing, and earn-outs that minimize or eliminate personal financial risk — your personal assets stay protected.</div></div>
+<div class="fi" onclick="this.classList.toggle('op')"><div class="fq">Can I try it before paying?<span class="ar">+</span></div><div class="fa">Yes. Free tier includes 2 sample deals with limited AI analysis. No credit card. Upgrade to Pro when ready.</div></div>
+<div class="fi" onclick="this.classList.toggle('op')"><div class="fq">Who is Alethinx built for?<span class="ar">+</span></div><div class="fa">First-time acquirers, search fund operators, independent sponsors, and CRE investors wanting institutional-grade deal intelligence without a full advisory team.</div></div>
+</div>
+</section>
 
-      <div class="pricing-grid">
+<section class="cs"><div class="gd"></div><div class="ctn rv" style="position:relative">
+<p class="sl">Get Started</p><div class="st" style="margin-bottom:16px">Deploy Your First Deal Agent</div>
+<p style="font-size:15px;color:var(--secondary);max-width:480px;margin:0 auto 36px;line-height:1.7">No dashboards. No manual analysis. Just autonomous AI agents that source, analyze, and structure deals for you.</p>
+<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+<a href="https://app.alethinx.ai/auth" class="bp">Deploy Agent — Free →</a>
+<a href="https://app.alethinx.ai/business-acquisition" class="bsl">Browse Live Deals</a>
+</div>
+</div></section>
 
-        <!-- Explorer -->
-        <div class="pricing-card fade-in">
-          <div class="pricing-tier">Explorer</div>
-          <div class="pricing-price">
-            <span class="pricing-price-num">$0</span>
-            <span class="pricing-price-per">/forever</span>
-          </div>
-          <p class="pricing-desc">Explore the platform and see deal intelligence in action.</p>
-          <ul class="pricing-features">
-            <li class="pricing-feat"><span class="check">✓</span> 3 deal analyses per month</li>
-            <li class="pricing-feat"><span class="check">✓</span> Basic AI deal summary</li>
-            <li class="pricing-feat"><span class="check">✓</span> Deal score only (no financing)</li>
-            <li class="pricing-feat"><span class="check">✓</span> Market Opportunity data</li>
-            <li class="pricing-feat"><span class="check">✓</span> Community access</li>
-          </ul>
-          <a href="https://app.alethinx.ai/auth" class="pricing-cta outline">Get Started Free</a>
-        </div>
+<footer><div class="in">
+<div><span style="color:var(--primary);font-size:14px;font-weight:800;letter-spacing:-0.02em;text-transform:uppercase">ALETHINX AI</span><div class="cp" style="margin-top:4px">© 2026 Alethinx AI. All rights reserved. Proprietary and confidential.</div></div>
+<div class="lg"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="mailto:mark@alethinx.com">Contact</a></div>
+</div></footer>
 
-        <!-- Pro -->
-        <div class="pricing-card featured fade-in fade-delay-1">
-          <div class="pricing-badge">Recommended</div>
-          <div class="pricing-tier">Pro</div>
-          <div class="pricing-price">
-            <span class="pricing-price-num">$59</span>
-            <span class="pricing-price-per">/month</span>
-          </div>
-          <div class="pricing-original">$79/mo regular price</div>
-          <div class="pricing-founding">
-            <span class="dot"></span>
-            37 founding seats left — locks in forever
-          </div>
-          <p class="pricing-desc">Full deal intelligence for independent acquirers.</p>
-          <ul class="pricing-features">
-            <li class="pricing-feat"><span class="check">✓</span> Unlimited deal analyses</li>
-            <li class="pricing-feat"><span class="check">✓</span> Full 5-member AI Board verdicts</li>
-            <li class="pricing-feat"><span class="check">✓</span> Zero-PG financing playbooks</li>
-            <li class="pricing-feat"><span class="check">✓</span> Passive income calculator</li>
-            <li class="pricing-feat"><span class="check">✓</span> Weekly curated deal alerts</li>
-            <li class="pricing-feat"><span class="check">✓</span> LOI template generator</li>
-            <li class="pricing-feat"><span class="check">✓</span> Investor Brief PDF export</li>
-            <li class="pricing-feat"><span class="check">✓</span> Priority support</li>
-          </ul>
-          <a href="https://app.alethinx.ai/auth" class="pricing-cta teal">Claim Founding Rate →</a>
-        </div>
-
-        <!-- Enterprise -->
-        <div class="pricing-card fade-in fade-delay-2">
-          <div class="pricing-tier">Enterprise</div>
-          <div class="pricing-price">
-            <span class="pricing-price-num">$399</span>
-            <span class="pricing-price-per">/month</span>
-          </div>
-          <p class="pricing-desc">For teams, family offices, and portfolio builders.</p>
-          <ul class="pricing-features">
-            <li class="pricing-feat"><span class="check">✓</span> Everything in Pro</li>
-            <li class="pricing-feat"><span class="check">✓</span> Custom roll-up modeling</li>
-            <li class="pricing-feat"><span class="check">✓</span> API access for deal pipeline</li>
-            <li class="pricing-feat"><span class="check">✓</span> Team seats (up to 5)</li>
-            <li class="pricing-feat"><span class="check">✓</span> White-glove onboarding call</li>
-            <li class="pricing-feat"><span class="check">✓</span> Priority deal sourcing</li>
-            <li class="pricing-feat"><span class="check">✓</span> Dedicated account manager</li>
-          </ul>
-          <a href="mailto:mark@alethinx.ai" class="pricing-cta outline">Contact Us →</a>
-        </div>
-
-      </div>
-      <p class="pricing-note">All plans include a 7-day money-back guarantee. No contracts. Cancel anytime.</p>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="section section-alt" aria-label="Frequently asked questions">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-tag"><span class="tag">FAQ</span></div>
-        <h2 class="section-h2">Common Questions</h2>
-      </div>
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            What kind of deals does Alethinx source?
-            <span class="faq-arrow" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a">Business acquisitions (healthcare, IT/MSP, B2B services, F&amp;B) and commercial real estate (NNN, industrial, self-storage, medical office). All analyzed for passive income with zero-PG financing structures.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            How does the AI Board Analysis work?
-            <span class="faq-arrow" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a">5 AI advisors — CEO, CFO, CPA, Risk Analyst, Legal — analyze every deal simultaneously using NVIDIA Nemotron models, then synthesize a weighted Board Verdict with go/no-go recommendation in under 60 seconds. Dissenting opinions are captured and shown, not hidden.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            What does "zero personal guarantee" mean?
-            <span class="faq-arrow" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a">Alethinx structures deals using SBA loans, seller financing, and earn-outs that minimize or eliminate personal financial risk. Your personal assets stay protected. The Execution Agent generates the actual financing stack documents, not just advice.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            What is the founding rate and how long does it last?
-            <span class="faq-arrow" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a">The founding rate of $59/mo locks in your price forever — it will never increase as long as you remain subscribed. Once the 37 founding seats are filled, the price moves to the regular rate of $79/mo. There is no way to get the $59 rate after seats are gone.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            Who is Alethinx built for?
-            <span class="faq-arrow" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a">First-time acquirers, search fund operators, independent sponsors, self-funded searchers, family offices, and CRE investors who want institutional-grade deal intelligence without a $15K–$75K advisory fee or a full M&amp;A team.</div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" aria-expanded="false">
-            What NVIDIA technology powers Alethinx?
-            <span class="faq-arrow" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-a">Alethinx is built on NVIDIA's NeMo Agent Toolkit and Nemotron open models for the AI Board multi-agent system, NVIDIA NIM Microservices (Financial Services) for GPU-accelerated document processing, and Dynamo 1.0 for orchestrating concurrent agent pipelines. We are aligning with the NVIDIA Inception Program to access Blackwell compute credits and co-marketing support.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WAITLIST -->
-  <section id="waitlist">
-    <div class="container">
-      <div class="waitlist-inner">
-        <div class="section-tag" style="justify-content:center; margin-bottom:16px;"><span class="tag">Early Access</span></div>
-        <h3 class="waitlist-h3">Get Early Access to New AI Engines</h3>
-        <p class="waitlist-sub">Join acquirers getting first access to new agents, deal alerts, and financing tools.</p>
-        <form class="waitlist-form" id="waitlist-form" onsubmit="handleWaitlist(event)" novalidate>
-          <label for="waitlist-email" class="sr-only">Email address</label>
-          <input type="email" id="waitlist-email" class="waitlist-input" placeholder="your@email.com" required autocomplete="email">
-          <button type="submit" class="waitlist-submit">Join Waitlist →</button>
-        </form>
-        <div class="waitlist-success" id="waitlist-success">✓ You're on the list! We'll be in touch soon.</div>
-        <p class="waitlist-note">No spam. Unsubscribe anytime.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section id="cta">
-    <div class="container">
-      <h2 class="cta-h2">The Inflection Point Has Arrived.</h2>
-      <p class="cta-sub">Jensen Huang declared it at GTC 2026. The cost of institutional-grade deal analysis is dropping 10x. The agents are ready. Are you?</p>
-      <div class="cta-btns">
-        <a href="https://app.alethinx.ai/auth" class="btn-hero">🚀 Deploy Agent — Free</a>
-        <a href="https://app.alethinx.ai/business-acquisition" class="btn-hero-ghost">Browse Live Deals</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-top">
-        <div>
-          <div class="footer-brand-name">
-            <img src="logo.png" alt="Alethinx AI" style="width:34px;height:34px;border-radius:9px;object-fit:contain;" aria-hidden="true">
-            ALETHINX AI
-          </div>
-          <p class="footer-tagline">The Intelligence Layer for Business Acquisitions. Powering the $5 trillion Great Ownership Transfer.</p>
-          <div class="footer-ip">
-            <strong style="color:var(--text-2); font-size:12px;">Intellectual Property</strong><br>
-            Protected by 4 trade secrets · 3 federal trademark applications pending · 2–3 provisional patents in 90-day window.
-            All engines (Deal Genie™, AI Board™, Execution Agent™, Trade Audit™) are proprietary and confidential.
-            © 2026 Alethinx AI, Inc. All rights reserved.
-          </div>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title">Product</div>
-          <a href="https://app.alethinx.ai/business-acquisition">Business Acquisitions</a>
-          <a href="https://app.alethinx.ai/commercial-real-estate">Commercial Real Estate</a>
-          <a href="https://app.alethinx.ai/market-opportunity">Market Opportunity</a>
-          <a href="#pricing">Pricing</a>
-          <a href="https://app.alethinx.ai/auth">Sign In</a>
-        </div>
-        <div class="footer-col">
-          <div class="footer-col-title">Company</div>
-          <a href="mailto:mark@alethinx.ai">Contact</a>
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms of Service</a>
-          <a href="https://www.linkedin.com/company/alethinx" target="_blank" rel="noopener noreferrer">Alethinx on LinkedIn</a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p class="footer-legal">© 2026 Alethinx AI, Inc. · Delaware C-Corp · McKinney, Texas · Document ID: AX-SITE-001</p>
-        <p class="footer-founder">Enterprise AI &amp; M&amp;A Intelligence Platform</p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // ── LOADER ──────────────────────────────────────────────
-    window.addEventListener('load', function() {
-      const loader = document.getElementById('loader');
-      setTimeout(function() { loader.classList.add('hidden'); }, 600);
-    });
-
-    // ── MOBILE MENU ─────────────────────────────────────────
-    const burger = document.getElementById('burger');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    burger.addEventListener('click', function() {
-      const isOpen = mobileMenu.classList.contains('open');
-      mobileMenu.classList.toggle('open');
-      burger.classList.toggle('open');
-      burger.setAttribute('aria-expanded', !isOpen);
-    });
-
-    // Close menu when a link is tapped
-    mobileMenu.querySelectorAll('a').forEach(function(link) {
-      link.addEventListener('click', function() {
-        mobileMenu.classList.remove('open');
-        burger.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    // Close menu on outside click
-    document.addEventListener('click', function(e) {
-      if (!document.getElementById('nav').contains(e.target)) {
-        mobileMenu.classList.remove('open');
-        burger.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // ── FAQ ACCORDION ────────────────────────────────────────
-    document.querySelectorAll('.faq-q').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        const item = btn.closest('.faq-item');
-        const isOpen = item.classList.contains('open');
-        // Close all
-        document.querySelectorAll('.faq-item.open').forEach(function(el) {
-          el.classList.remove('open');
-          el.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
-        });
-        // Open clicked if it was closed
-        if (!isOpen) {
-          item.classList.add('open');
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      });
-    });
-
-    // ── SCROLL ANIMATIONS ────────────────────────────────────
-    const fadeEls = document.querySelectorAll('.fade-in');
-    const observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    fadeEls.forEach(function(el) { observer.observe(el); });
-
-    // ── WAITLIST FORM ────────────────────────────────────────
-    function handleWaitlist(e) {
-      e.preventDefault();
-      const email = document.getElementById('waitlist-email').value;
-      if (!email) return;
-      document.getElementById('waitlist-form').style.display = 'none';
-      document.getElementById('waitlist-success').classList.add('show');
-      // In production: send to your backend / Supabase
-      console.log('Waitlist signup:', email);
-    }
-
-    // ── SMOOTH ANCHOR SCROLL (offset for sticky nav) ─────────
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-      anchor.addEventListener('click', function(e) {
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          const offset = 72;
-          const top = target.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top: top, behavior: 'smooth' });
-        }
-      });
-    });
-
-    // ── NAV SCROLL SHADOW ────────────────────────────────────
-    window.addEventListener('scroll', function() {
-      const nav = document.getElementById('nav');
-      if (window.scrollY > 20) {
-        nav.style.background = 'rgba(5,13,20,0.98)';
-        nav.style.boxShadow = '0 1px 0 rgba(255,255,255,0.06)';
-      } else {
-        nav.style.background = 'rgba(5,13,20,0.85)';
-        nav.style.boxShadow = 'none';
-      }
-    });
-  </script>
-
+<script>
+const o=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vi')})},{threshold:0.12});
+document.querySelectorAll('.rv').forEach(el=>o.observe(el));
+function he(e){e.preventDefault();document.getElementById('es').style.display='block';document.getElementById('ef').style.display='none'}
+</script>
 </body>
 </html>
