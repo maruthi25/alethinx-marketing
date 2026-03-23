@@ -27,11 +27,11 @@
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 
     /* ── LOADER ── */
-    #loader { position: fixed; inset: 0; background: #ede8f5; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; transition: opacity 0.3s; }
-    #loader.hidden { opacity: 0; pointer-events: none; }
-    .loader-bar { width: 100px; height: 3px; background: rgba(124,58,237,0.15); border-radius: 3px; overflow: hidden; }
-    .loader-fill { height: 100%; background: #7c3aed; width: 0; animation: load 0.7s ease forwards; }
-    @keyframes load { to { width: 100%; } }
+    
+    
+    
+    
+     }
 
     /* ── NAV ── */
     #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(124,58,237,0.1); }
@@ -243,10 +243,7 @@
 </head>
 <body>
 
-  <div id="loader">
-    <img src="logo.png" alt="Alethinx AI" style="width:52px;height:52px;object-fit:contain;background:transparent;border:none;">
-    <div class="loader-bar"><div class="loader-fill"></div></div>
-  </div>
+
 
   <nav id="nav">
     <div class="container nav-inner">
@@ -770,8 +767,7 @@
   </footer>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('loader');if(l){setTimeout(function(){l.classList.add('hidden');},300);}});
-    window.addEventListener('load',function(){var l=document.getElementById('loader');if(l){l.classList.add('hidden');}});
+
     var burger=document.getElementById('burger'),mm=document.getElementById('mobile-menu');
     burger.addEventListener('click',function(){var o=mm.classList.contains('open');mm.classList.toggle('open');burger.classList.toggle('open');burger.setAttribute('aria-expanded',!o);});
     mm.querySelectorAll('a').forEach(function(l){l.addEventListener('click',function(){mm.classList.remove('open');burger.classList.remove('open');burger.setAttribute('aria-expanded','false');});});
