@@ -408,44 +408,52 @@
     </div>
   </section>
   <script>
-  var stepData = [
-    { icon:'🔗', title:'Deal Intake', sub:'URL → Auto-filled form', score:'78', dscr:'1.80', badge:'SBA Eligible', color:'#f59e0b', desc:'Paste any listing URL. Deal Genie™ fetches the listing, extracts financials, calculates DSCR server-side, and scores the deal in under 60 seconds.' },
-    { icon:'🧠', title:'AI Board Verdict', sub:'5 personas · 60 seconds', score:'GO', dscr:'REVIEW', badge:'Weighted Consensus', color:'#10b981', desc:'CEO says "Strong market position." CFO flags "Debt service is tight but manageable." CPA confirms "Clean books." Risk flags "Owner concentration." Legal says "Standard deal." Board Verdict: REVIEW → BUY.' },
-    { icon:'📋', title:'Due Diligence', sub:'200 items · 6 specialists', score:'94%', dscr:'Complete', badge:'6 AI Reviewers', color:'#3b82f6', desc:'Financial analyst reviews P&Ls. Legal reviewer checks contracts. Ops specialist flags key-person risk. Market analyst confirms competitive position. 187 of 200 items cleared.' },
-    { icon:'💰', title:'Financing Stack', sub:'Zero personal guarantee', score:'$1.44M', dscr:'SBA 7(a)', badge:'Zero-PG Structure', color:'#7c3aed', desc:'SBA 7(a): $1.44M at 10.5%, 10-year term. Seller note: $180K at 6%, 5 years. Earnout: $120K over 3 years. Total: $1.74M acquisition. Zero personal assets at risk.' },
-    { icon:'📄', title:'LOI Generated', sub:'Ready to send to seller', score:'✓', dscr:'12 sections', badge:'Auto-Populated', color:'#f59e0b', desc:'Letter of Intent auto-generated: Offering $1.62M ($180K below ask). SBA contingency. 60-day due diligence period. 30-day closing. Seller financing terms included. Download as PDF.' },
-    { icon:'✅', title:'Closing Package', sub:'Trade Audit + 100-day plan', score:'Pass', dscr:'25/25', badge:'Wire Fraud Cleared', color:'#10b981', desc:'Trade Audit: All 304 rules passed. Wire fraud verification: 25/25 checks cleared. 100-day post-close operations plan generated. DSCR monitoring activated. Passive income tracker: $18,400/mo projected.' }
-  ];
-  function setStep(n) {
-    var steps = document.querySelectorAll('.how-step');
-    steps.forEach(function(s,i) {
-      if(i===n) {
-        s.style.background='#f5f3ff'; s.style.border='1.5px solid #7c3aed';
-        s.querySelector('div').style.background='#7c3aed';
-        s.querySelector('div').style.color='#fff';
-        s.querySelectorAll('div')[1].querySelectorAll('div')[0].style.color='#1a0d40';
-      } else {
-        s.style.background='#f9fafb'; s.style.border='1.5px solid transparent';
-        s.querySelector('div').style.background='#e5e7eb';
-        s.querySelector('div').style.color='#6b7280';
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      var stepData = [
+        { icon:'🔗', title:'Deal Intake', sub:'URL → Auto-filled form', score:'78', dscr:'1.80', badge:'SBA Eligible', color:'#f59e0b', desc:'Paste any listing URL. Deal Genie™ fetches the listing, extracts financials, calculates DSCR server-side, and scores the deal in under 60 seconds.' },
+        { icon:'🧠', title:'AI Board Verdict', sub:'5 personas · 60 seconds', score:'GO', dscr:'REVIEW', badge:'Weighted Consensus', color:'#10b981', desc:'CEO says "Strong market position." CFO flags "Debt service is tight but manageable." CPA confirms "Clean books." Risk flags "Owner concentration." Legal says "Standard deal." Board Verdict: REVIEW → BUY.' },
+        { icon:'📋', title:'Due Diligence', sub:'200 items · 6 specialists', score:'94%', dscr:'Complete', badge:'6 AI Reviewers', color:'#3b82f6', desc:'Financial analyst reviews P&Ls. Legal reviewer checks contracts. Ops specialist flags key-person risk. Market analyst confirms competitive position. 187 of 200 items cleared.' },
+        { icon:'💰', title:'Financing Stack', sub:'Zero personal guarantee', score:'$1.44M', dscr:'SBA 7(a)', badge:'Zero-PG Structure', color:'#7c3aed', desc:'SBA 7(a): $1.44M at 10.5%, 10-year term. Seller note: $180K at 6%, 5 years. Earnout: $120K over 3 years. Total: $1.74M acquisition. Zero personal assets at risk.' },
+        { icon:'📄', title:'LOI Generated', sub:'Ready to send to seller', score:'✓', dscr:'12 sections', badge:'Auto-Populated', color:'#f59e0b', desc:'Letter of Intent auto-generated: Offering $1.62M ($180K below ask). SBA contingency. 60-day due diligence period. 30-day closing. Seller financing terms included. Download as PDF.' },
+        { icon:'✅', title:'Closing Package', sub:'Trade Audit + 100-day plan', score:'Pass', dscr:'25/25', badge:'Wire Fraud Cleared', color:'#10b981', desc:'Trade Audit: All 304 rules passed. Wire fraud verification: 25/25 checks cleared. 100-day post-close operations plan generated. DSCR monitoring activated. Passive income tracker: $18,400/mo projected.' }
+      ];
+      function setStep(n) {
+        try {
+          var steps = document.querySelectorAll('.how-step');
+          if (!steps.length) return;
+          steps.forEach(function(s,i) {
+            var numDiv = s.querySelector('div');
+            if (!numDiv) return;
+            if(i===n) {
+              s.style.background='#f5f3ff'; s.style.border='1.5px solid #7c3aed';
+              numDiv.style.background='#7c3aed'; numDiv.style.color='#fff';
+            } else {
+              s.style.background='#f9fafb'; s.style.border='1.5px solid transparent';
+              numDiv.style.background='#e5e7eb'; numDiv.style.color='#6b7280';
+            }
+          });
+          var preview = document.getElementById('step-preview');
+          if (!preview) return;
+          var d = stepData[n];
+          preview.innerHTML =
+            '<div style="text-align:center;margin-bottom:20px"><span style="font-size:36px">'+d.icon+'</span><div style="font-family:\'Poppins\',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-top:8px">'+d.title+'</div><div style="font-size:12px;color:#a78bfa;margin-top:4px">'+d.sub+'</div></div>'+
+            '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">'+
+            '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-family:\'Poppins\',sans-serif;font-size:22px;font-weight:800;color:'+d.color+'">'+d.score+'</div><div style="font-size:10px;color:#a78bfa;margin-top:2px">Score</div></div>'+
+            '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-family:\'Poppins\',sans-serif;font-size:22px;font-weight:800;color:#fff">'+d.dscr+'</div><div style="font-size:10px;color:#a78bfa;margin-top:2px">DSCR</div></div>'+
+            '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;font-weight:700;color:'+d.color+';line-height:1.3;margin-top:4px">'+d.badge+'</div></div>'+
+            '</div>'+
+            '<div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px;font-size:12px;color:#c4b5fd;line-height:1.65">'+d.desc+'</div>';
+        } catch(e) { console.log('setStep error:', e); }
       }
-    });
-    var d = stepData[n];
-    document.getElementById('step-preview').innerHTML =
-      '<div style="text-align:center;margin-bottom:20px"><span style="font-size:36px">'+d.icon+'</span><div style="font-family:\'Poppins\',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-top:8px">'+d.title+'</div><div style="font-size:12px;color:#a78bfa;margin-top:4px">'+d.sub+'</div></div>'+
-      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">'+
-      '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-family:\'Poppins\',sans-serif;font-size:22px;font-weight:800;color:'+d.color+'">'+d.score+'</div><div style="font-size:10px;color:#a78bfa;margin-top:2px">Score</div></div>'+
-      '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-family:\'Poppins\',sans-serif;font-size:22px;font-weight:800;color:#fff">'+d.dscr+'</div><div style="font-size:10px;color:#a78bfa;margin-top:2px">DSCR</div></div>'+
-      '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;font-weight:700;color:'+d.color+';line-height:1.3;margin-top:4px">'+d.badge+'</div></div>'+
-      '</div>'+
-      '<div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px;font-size:12px;color:#c4b5fd;line-height:1.65">'+d.desc+'</div>';
-  }
-  setStep(0);
-  var currentStep = 0;
-  setInterval(function() {
-    currentStep = (currentStep + 1) % 6;
-    setStep(currentStep);
-  }, 4000);
+      setStep(0);
+      var currentStep = 0;
+      setInterval(function() {
+        currentStep = (currentStep + 1) % 6;
+        setStep(currentStep);
+      }, 4000);
+    } catch(e) { console.log('How It Works init error:', e); }
+  });
   </script>
 
   <section id="engines" class="section">
