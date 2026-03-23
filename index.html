@@ -7,6 +7,9 @@
   <meta name="description" content="7 proprietary AI engines that source, score, structure, and close business acquisitions and commercial real estate deals — autonomously.">
   <meta property="og:title" content="Alethinx AI — Autonomous Deal Intelligence">
   <meta property="og:description" content="7 AI engines. Deal Genie™, AI Board™, Deal Coworker™, Solomon™, SEEKER™ and more. Free to start.">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
   <meta property="og:url" content="https://www.alethinx.ai">
   <meta property="og:type" content="website">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -474,7 +477,7 @@
           <li>White-glove onboarding call</li>
           <li>Dedicated account manager</li>
         </ul>
-        <a href="mailto:hello@alethinx.ai" class="price-cta price-cta-outline">Contact Us →</a>
+        <a href="mailto:enterprise@alethinx.ai" class="price-cta price-cta-outline">Contact Us →</a>
       </div>
     </div>
     <p style="text-align:center;font-size:13px;color:#9ca3af;margin-top:16px">All plans include a 7-day money-back guarantee · No contracts · Cancel anytime</p>
@@ -565,6 +568,7 @@
       <div class="footer-col">
         <h4>Company</h4>
         <a href="mailto:hello@alethinx.ai">Contact</a>
+        <a href="mailto:abuse@alethinx.ai">Report Abuse</a>
         <a href="https://www.alethinx.ai/privacy">Privacy Policy</a>
         <a href="https://www.alethinx.ai/terms">Terms of Service</a>
         <a href="https://app.alethinx.ai/market-opportunity">Market Data</a>
@@ -681,7 +685,7 @@
         body:JSON.stringify({action:'chat_message',data:{session_id:AX_SID,message:msg,conversation_history:AX_HIST}})});
       var d=await r.json();
       var t=document.getElementById('ax-typing');if(t)t.remove();
-      var reply=d.reply||'Let me connect you with our team. Email mark@alethinx.ai';
+      var reply=d.reply||'Let me connect you with our team. Email hello@alethinx.ai';
       axMsg(reply,false);
       AX_HIST.push({role:'assistant',content:reply,timestamp:new Date().toISOString()});
     }catch(e){
