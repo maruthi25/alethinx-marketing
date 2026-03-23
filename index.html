@@ -297,6 +297,120 @@
         <a href="https://app.alethinx.ai/auth" class="btn-hero-primary">Deploy Your First Deal Agent →</a>
         <a href="#engines" class="btn-hero-ghost">View AI Engines</a>
       </div>
+
+      <!-- LIVE DEAL PREVIEW WIDGET -->
+      <div id="deal-preview" class="fade-in fade-delay-4" style="max-width:680px;margin:0 auto 48px;background:#fff;border-radius:20px;padding:28px 32px;box-shadow:0 4px 32px rgba(124,58,237,0.10);border:1.5px solid rgba(124,58,237,0.15)">
+        <div style="text-align:center;margin-bottom:18px">
+          <div style="font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;color:#7c3aed;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">✨ Try it free — no signup required</div>
+          <div style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;color:#1a0d40">Get an instant AI deal score preview</div>
+          <div style="font-size:13px;color:#6b7280;margin-top:4px">Paste any BizBuySell, Flippa, or LoopNet URL — or describe a business</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <input id="deal-input" type="text" placeholder="e.g. HVAC company Dallas $1.2M asking, $380K SDE, 12 years old" style="flex:1;min-width:200px;border:1.5px solid rgba(124,58,237,0.25);border-radius:10px;padding:12px 16px;font-size:14px;outline:none;color:#1a0d40;font-family:'Inter',sans-serif" onfocus="this.style.borderColor='#7c3aed'" onblur="this.style.borderColor='rgba(124,58,237,0.25)'"/>
+          <button onclick="runDealPreview()" id="preview-btn" style="background:#7c3aed;color:#fff;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;padding:12px 24px;border-radius:10px;border:none;cursor:pointer;white-space:nowrap;transition:background .15s" onmouseover="this.style.background='#6d28d9'" onmouseout="this.style.background='#7c3aed'">⚡ Get Free Score</button>
+        </div>
+        <div id="preview-examples" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <button onclick="tryExample(this)" data-val="HVAC company North Texas, $1.1M asking price, $340K annual SDE, 15 years in business, 8 employees, recurring contracts" style="background:#f5f3ff;color:#7c3aed;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(124,58,237,0.2);cursor:pointer">HVAC Business Texas</button>
+          <button onclick="tryExample(this)" data-val="IT managed services provider, $800K asking, $220K SDE, B2B recurring revenue, 45 clients, owner ready to retire" style="background:#f5f3ff;color:#7c3aed;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(124,58,237,0.2);cursor:pointer">IT/MSP Company</button>
+          <button onclick="tryExample(this)" data-val="Self-storage facility 350 units, NNN lease, $2.1M asking, $190K NOI, 94% occupancy, Dallas suburb" style="background:#f5f3ff;color:#7c3aed;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(124,58,237,0.2);cursor:pointer">Self-Storage CRE</button>
+          <button onclick="tryExample(this)" data-val="Laundromat 3 locations DFW, $650K asking, $180K SDE, semi-absentee, manager in place, 22 years operating" style="background:#f5f3ff;color:#7c3aed;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px;border:1px solid rgba(124,58,237,0.2);cursor:pointer">Laundromat Portfolio</button>
+        </div>
+        <div id="preview-result" style="display:none;margin-top:20px"></div>
+      </div>
+      <script>
+      function tryExample(btn) {
+        document.getElementById('deal-input').value = btn.getAttribute('data-val');
+        runDealPreview();
+      }
+      async function runDealPreview() {
+        const input = document.getElementById('deal-input').value.trim();
+        if (!input) return;
+        const btn = document.getElementById('preview-btn');
+        const result = document.getElementById('preview-result');
+        btn.textContent = '⏳ Analyzing...';
+        btn.disabled = true;
+        result.style.display = 'none';
+        try {
+          const resp = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-api-key': '', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-calls': 'true' },
+            body: JSON.stringify({
+              model: 'claude-sonnet-4-20250514',
+              max_tokens: 500,
+              system: `You are Deal Genie™, Alethinx AI's scoring engine. When given a business description, respond ONLY with a JSON object (no markdown, no explanation) with these exact fields:
+{
+  "score": <number 0-100>,
+  "dscr": <number like 1.42>,
+  "verdict": "<STRONG BUY|BUY|REVIEW|PASS>",
+  "verdict_color": "<green|blue|amber|red>",
+  "sba_eligible": <true|false>,
+  "asking_price": "<formatted like $1.2M>",
+  "monthly_passive": "<estimated monthly passive income like $18,400/mo>",
+  "top_strength": "<one sentence, the single best thing about this deal>",
+  "top_risk": "<one sentence, the single biggest risk>",
+  "board_ceo": "<10 words max CEO perspective>",
+  "board_cfo": "<10 words max CFO perspective>",
+  "board_risk": "<10 words max Risk perspective>"
+}
+Be realistic. Score based on: financials (30%), market (20%), operations (20%), financing fit (15%), strategic (15%).`,
+              messages: [{ role: 'user', content: `Score this deal: ${input}` }]
+            })
+          });
+          const data = await resp.json();
+          let text = data.content?.[0]?.text || '{}';
+          text = text.replace(/```json|```/g, '').trim();
+          const d = JSON.parse(text);
+          const vc = { green: '#16a34a', blue: '#2563eb', amber: '#d97706', red: '#dc2626' };
+          const vb = { green: '#dcfce7', blue: '#dbeafe', amber: '#fef3c7', red: '#fee2e2' };
+          const color = vc[d.verdict_color] || '#7c3aed';
+          const bg = vb[d.verdict_color] || '#f5f3ff';
+          result.innerHTML = `
+            <div style="border-top:1px solid rgba(124,58,237,0.1);padding-top:16px">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+                <div style="background:#f5f3ff;border-radius:12px;padding:14px;text-align:center">
+                  <div style="font-family:'Poppins',sans-serif;font-size:32px;font-weight:800;color:#7c3aed">${d.score}</div>
+                  <div style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em">Deal Score</div>
+                </div>
+                <div style="background:#f5f3ff;border-radius:12px;padding:14px;text-align:center">
+                  <div style="font-family:'Poppins',sans-serif;font-size:32px;font-weight:800;color:#7c3aed">${d.dscr}</div>
+                  <div style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em">DSCR</div>
+                </div>
+                <div style="background:${bg};border-radius:12px;padding:14px;text-align:center">
+                  <div style="font-family:'Poppins',sans-serif;font-size:18px;font-weight:800;color:${color};line-height:1.2;margin-top:6px">${d.verdict}</div>
+                  <div style="font-size:11px;font-weight:600;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin-top:2px">AI Board Verdict</div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+                <div style="background:#f0fdf4;border-radius:10px;padding:10px 14px;font-size:12px;color:#166534"><span style="font-weight:700">✓ Strength:</span> ${d.top_strength}</div>
+                <div style="background:#fef2f2;border-radius:10px;padding:10px 14px;font-size:12px;color:#991b1b"><span style="font-weight:700">⚠ Risk:</span> ${d.top_risk}</div>
+              </div>
+              <div style="background:#f9fafb;border-radius:10px;padding:12px 14px;margin-bottom:14px">
+                <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">👑 AI Board Quick Takes</div>
+                <div style="font-size:12px;color:#374151;margin-bottom:4px"><span style="font-weight:600;color:#1a0d40">CEO:</span> ${d.board_ceo}</div>
+                <div style="font-size:12px;color:#374151;margin-bottom:4px"><span style="font-weight:600;color:#1a0d40">CFO:</span> ${d.board_cfo}</div>
+                <div style="font-size:12px;color:#374151"><span style="font-weight:600;color:#1a0d40">Risk:</span> ${d.board_risk}</div>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                ${d.sba_eligible ? '<span style="background:#dcfce7;color:#166534;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px">✓ SBA Eligible</span>' : '<span style="background:#fee2e2;color:#991b1b;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px">✗ Not SBA Eligible</span>'}
+                <span style="background:#f5f3ff;color:#7c3aed;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px">~${d.monthly_passive} passive</span>
+                <a href="https://app.alethinx.ai/deal-coworker" style="margin-left:auto;background:#7c3aed;color:#fff;font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;padding:8px 18px;border-radius:8px;text-decoration:none">Get Full Analysis Free →</a>
+              </div>
+              <div style="font-size:10px;color:#9ca3af;margin-top:10px;text-align:center">Preview only · Full 200-item due diligence, SBA financing stack, LOI, and AI Board IC verdict available in app</div>
+            </div>`;
+          result.style.display = 'block';
+        } catch(e) {
+          result.innerHTML = `<div style="background:#fef2f2;border-radius:10px;padding:12px;font-size:13px;color:#991b1b;text-align:center">Preview temporarily unavailable — <a href="https://app.alethinx.ai/deal-coworker" style="color:#7c3aed;font-weight:600">try the full app free →</a></div>`;
+          result.style.display = 'block';
+        }
+        btn.textContent = '⚡ Get Free Score';
+        btn.disabled = false;
+      }
+      document.getElementById('deal-input').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') runDealPreview();
+      });
+      </script>
+      <!-- END LIVE DEAL PREVIEW WIDGET -->
+
       <div class="hero-stats fade-in fade-delay-4">
         <div class="stat-cell"><div class="stat-num">$5T</div><div class="stat-label">Enterprise value at stake</div><div class="stat-source">McKinsey IEM, Feb 2026</div></div>
         <div class="stat-cell"><div class="stat-num">6M</div><div class="stat-label">Businesses need new owners</div><div class="stat-source">McKinsey IEM, Feb 2026</div></div>
@@ -319,6 +433,89 @@
       </div>
     </div>
   </div>
+
+  <section id="how-it-works" style="background:#fff;padding:72px 0">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:48px">
+        <span style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:#7c3aed;letter-spacing:.1em;text-transform:uppercase">See It In Action</span>
+        <h2 style="font-family:'Poppins',sans-serif;font-size:36px;font-weight:800;color:#1a0d40;margin:8px 0 12px">From listing URL to closing documents<br>in 72 hours</h2>
+        <p style="font-size:16px;color:#6b7280;max-width:560px;margin:0 auto">Watch Deal Coworker™ execute all 6 phases of a real business acquisition — autonomously.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;max-width:1000px;margin:0 auto">
+        <div>
+          <div id="steps-container">
+            <div class="how-step active-step" data-step="0" onclick="setStep(0)" style="display:flex;gap:16px;padding:16px;border-radius:12px;cursor:pointer;margin-bottom:8px;background:#f5f3ff;border:1.5px solid #7c3aed">
+              <div style="width:36px;height:36px;background:#7c3aed;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Poppins',sans-serif;font-weight:800;font-size:14px;flex-shrink:0">1</div>
+              <div><div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#1a0d40">Paste any listing URL</div><div style="font-size:12px;color:#6b7280;margin-top:3px">BizBuySell, Flippa, LoopNet — Solomon™ auto-fills the form and runs Deal Genie™ scoring</div></div>
+            </div>
+            <div class="how-step" data-step="1" onclick="setStep(1)" style="display:flex;gap:16px;padding:16px;border-radius:12px;cursor:pointer;margin-bottom:8px;background:#f9fafb;border:1.5px solid transparent">
+              <div style="width:36px;height:36px;background:#e5e7eb;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#6b7280;font-family:'Poppins',sans-serif;font-weight:800;font-size:14px;flex-shrink:0">2</div>
+              <div><div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#374151">AI Board™ verdict in 60 seconds</div><div style="font-size:12px;color:#6b7280;margin-top:3px">5-persona investment committee — CEO, CFO, CPA, Risk, Legal — delivers weighted go/no-go</div></div>
+            </div>
+            <div class="how-step" data-step="2" onclick="setStep(2)" style="display:flex;gap:16px;padding:16px;border-radius:12px;cursor:pointer;margin-bottom:8px;background:#f9fafb;border:1.5px solid transparent">
+              <div style="width:36px;height:36px;background:#e5e7eb;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#6b7280;font-family:'Poppins',sans-serif;font-weight:800;font-size:14px;flex-shrink:0">3</div>
+              <div><div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#374151">200-item due diligence checklist</div><div style="font-size:12px;color:#6b7280;margin-top:3px">6 specialist AI reviewers scan financial, legal, operational, market, financing, and closing risk</div></div>
+            </div>
+            <div class="how-step" data-step="3" onclick="setStep(3)" style="display:flex;gap:16px;padding:16px;border-radius:12px;cursor:pointer;margin-bottom:8px;background:#f9fafb;border:1.5px solid transparent">
+              <div style="width:36px;height:36px;background:#e5e7eb;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#6b7280;font-family:'Poppins',sans-serif;font-weight:800;font-size:14px;flex-shrink:0">4</div>
+              <div><div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#374151">Zero-PG financing stack generated</div><div style="font-size:12px;color:#6b7280;margin-top:3px">SBA 7(a) + seller financing + earn-out structure — zero personal guarantee required</div></div>
+            </div>
+            <div class="how-step" data-step="4" onclick="setStep(4)" style="display:flex;gap:16px;padding:16px;border-radius:12px;cursor:pointer;margin-bottom:8px;background:#f9fafb;border:1.5px solid transparent">
+              <div style="width:36px;height:36px;background:#e5e7eb;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#6b7280;font-family:'Poppins',sans-serif;font-weight:800;font-size:14px;flex-shrink:0">5</div>
+              <div><div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#374151">LOI auto-generated & ready to send</div><div style="font-size:12px;color:#6b7280;margin-top:3px">Professional letter of intent with negotiation terms pre-populated from your deal data</div></div>
+            </div>
+            <div class="how-step" data-step="5" onclick="setStep(5)" style="display:flex;gap:16px;padding:16px;border-radius:12px;cursor:pointer;background:#f9fafb;border:1.5px solid transparent">
+              <div style="width:36px;height:36px;background:#e5e7eb;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#6b7280;font-family:'Poppins',sans-serif;font-weight:800;font-size:14px;flex-shrink:0">6</div>
+              <div><div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:#374151">Trade Audit™ + closing documents</div><div style="font-size:12px;color:#6b7280;margin-top:3px">304-rule compliance scan, wire fraud checklist, 100-day post-close plan generated</div></div>
+            </div>
+          </div>
+          <a href="https://app.alethinx.ai/deal-coworker" style="display:inline-flex;align-items:center;gap:8px;background:#7c3aed;color:#fff;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;margin-top:24px">Try Deal Coworker™ Free →</a>
+        </div>
+        <div id="step-preview" style="background:linear-gradient(135deg,#1a0d40,#2d1b69);border-radius:20px;padding:28px;min-height:380px;display:flex;flex-direction:column;justify-content:center">
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+  var stepData = [
+    { icon:'🔗', title:'Deal Intake', sub:'URL → Auto-filled form', score:'78', dscr:'1.80', badge:'SBA Eligible', color:'#f59e0b', desc:'Paste any listing URL. Deal Genie™ fetches the listing, extracts financials, calculates DSCR server-side, and scores the deal in under 60 seconds.' },
+    { icon:'🧠', title:'AI Board Verdict', sub:'5 personas · 60 seconds', score:'GO', dscr:'REVIEW', badge:'Weighted Consensus', color:'#10b981', desc:'CEO says "Strong market position." CFO flags "Debt service is tight but manageable." CPA confirms "Clean books." Risk flags "Owner concentration." Legal says "Standard deal." Board Verdict: REVIEW → BUY.' },
+    { icon:'📋', title:'Due Diligence', sub:'200 items · 6 specialists', score:'94%', dscr:'Complete', badge:'6 AI Reviewers', color:'#3b82f6', desc:'Financial analyst reviews P&Ls. Legal reviewer checks contracts. Ops specialist flags key-person risk. Market analyst confirms competitive position. 187 of 200 items cleared.' },
+    { icon:'💰', title:'Financing Stack', sub:'Zero personal guarantee', score:'$1.44M', dscr:'SBA 7(a)', badge:'Zero-PG Structure', color:'#7c3aed', desc:'SBA 7(a): $1.44M at 10.5%, 10-year term. Seller note: $180K at 6%, 5 years. Earnout: $120K over 3 years. Total: $1.74M acquisition. Zero personal assets at risk.' },
+    { icon:'📄', title:'LOI Generated', sub:'Ready to send to seller', score:'✓', dscr:'12 sections', badge:'Auto-Populated', color:'#f59e0b', desc:'Letter of Intent auto-generated: Offering $1.62M ($180K below ask). SBA contingency. 60-day due diligence period. 30-day closing. Seller financing terms included. Download as PDF.' },
+    { icon:'✅', title:'Closing Package', sub:'Trade Audit + 100-day plan', score:'Pass', dscr:'25/25', badge:'Wire Fraud Cleared', color:'#10b981', desc:'Trade Audit: All 304 rules passed. Wire fraud verification: 25/25 checks cleared. 100-day post-close operations plan generated. DSCR monitoring activated. Passive income tracker: $18,400/mo projected.' }
+  ];
+  function setStep(n) {
+    var steps = document.querySelectorAll('.how-step');
+    steps.forEach(function(s,i) {
+      if(i===n) {
+        s.style.background='#f5f3ff'; s.style.border='1.5px solid #7c3aed';
+        s.querySelector('div').style.background='#7c3aed';
+        s.querySelector('div').style.color='#fff';
+        s.querySelectorAll('div')[1].querySelectorAll('div')[0].style.color='#1a0d40';
+      } else {
+        s.style.background='#f9fafb'; s.style.border='1.5px solid transparent';
+        s.querySelector('div').style.background='#e5e7eb';
+        s.querySelector('div').style.color='#6b7280';
+      }
+    });
+    var d = stepData[n];
+    document.getElementById('step-preview').innerHTML =
+      '<div style="text-align:center;margin-bottom:20px"><span style="font-size:36px">'+d.icon+'</span><div style="font-family:\'Poppins\',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-top:8px">'+d.title+'</div><div style="font-size:12px;color:#a78bfa;margin-top:4px">'+d.sub+'</div></div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">'+
+      '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-family:\'Poppins\',sans-serif;font-size:22px;font-weight:800;color:'+d.color+'">'+d.score+'</div><div style="font-size:10px;color:#a78bfa;margin-top:2px">Score</div></div>'+
+      '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-family:\'Poppins\',sans-serif;font-size:22px;font-weight:800;color:#fff">'+d.dscr+'</div><div style="font-size:10px;color:#a78bfa;margin-top:2px">DSCR</div></div>'+
+      '<div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;font-weight:700;color:'+d.color+';line-height:1.3;margin-top:4px">'+d.badge+'</div></div>'+
+      '</div>'+
+      '<div style="background:rgba(255,255,255,0.06);border-radius:10px;padding:14px;font-size:12px;color:#c4b5fd;line-height:1.65">'+d.desc+'</div>';
+  }
+  setStep(0);
+  var currentStep = 0;
+  setInterval(function() {
+    currentStep = (currentStep + 1) % 6;
+    setStep(currentStep);
+  }, 4000);
+  </script>
 
   <section id="engines" class="section">
     <div class="container">
