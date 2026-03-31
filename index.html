@@ -14,7 +14,11 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=optional" rel="stylesheet">
+  <!-- Async font load (non-render-blocking) + font-display:swap.
+       Eliminates FCP delay AND the "H1 hidden by CSS" CLS trigger.
+       size-adjust fallback overrides below handle swap-phase metric CLS. -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
   <style>
     /* Font-metric fallback overrides — eliminates CLS from Poppins/Inter metric mismatch.
        size-adjust/ascent-override make the fallback font occupy the same space as the custom font
