@@ -535,6 +535,61 @@
   </div>
 </section>
 
+<!-- AUTOPILOT TEASER -->
+<section id="autopilot" style="background:linear-gradient(135deg,#1a0d40 0%,#2a0d5c 100%);padding:80px 24px;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;background:rgba(144,45,206,0.08)"></div>
+  <div style="position:absolute;left:-60px;bottom:-60px;width:200px;height:200px;border-radius:50%;background:rgba(144,45,206,0.06)"></div>
+  <div style="max-width:680px;margin:0 auto;position:relative">
+    <div style="display:inline-block;background:rgba(144,45,206,0.3);border:1px solid rgba(144,45,206,0.5);color:#B86EE8;font-family:monospace;font-size:11px;padding:6px 16px;border-radius:6px;letter-spacing:0.15em;margin-bottom:24px">
+      COMING SOON &middot; AX-TS-011
+    </div>
+    <h2 style="font-size:42px;font-weight:900;color:#fff;margin:0 0 16px;letter-spacing:-0.02em;line-height:1.1">
+      Alethinx Autopilot&trade;
+    </h2>
+    <p style="font-size:18px;color:rgba(255,255,255,0.65);margin:0 0 12px;line-height:1.7">
+      You bought the business. Now let AI run it.
+    </p>
+    <p style="font-family:monospace;font-size:13px;color:rgba(255,255,255,0.4);margin:0 0 36px;letter-spacing:0.05em">
+      7 AI agents &middot; Nightly operations loop &middot; 6am morning brief &middot; SBA covenant monitoring
+    </p>
+    <div style="display:flex;gap:0;max-width:420px;margin:0 auto 20px;border-radius:12px;overflow:hidden;border:1.5px solid rgba(144,45,206,0.4)">
+      <input type="email" id="autopilot-email" placeholder="your@email.com"
+        style="flex:1;padding:14px 18px;background:rgba(255,255,255,0.05);border:none;color:#fff;font-size:14px;outline:none;font-family:inherit" />
+      <button onclick="joinAutopilotWaitlist()"
+        style="padding:14px 24px;background:#902DCE;border:none;color:#fff;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;font-family:inherit;transition:background .15s"
+        onmouseover="this.style.background='#7c24b3'" onmouseout="this.style.background='#902DCE'">
+        Join Waitlist &rarr;
+      </button>
+    </div>
+    <p style="font-family:monospace;font-size:10px;color:rgba(255,255,255,0.25);letter-spacing:0.1em">
+      MONITOR $99/MO &middot; ASSIST $299/MO &middot; AUTOPILOT $499/MO &middot; LAUNCHING Q3 2026
+    </p>
+    <div id="autopilot-success" style="display:none;margin-top:16px;background:rgba(22,163,74,0.15);border:1px solid rgba(22,163,74,0.3);color:#16a34a;font-family:monospace;font-size:12px;padding:10px 20px;border-radius:8px;letter-spacing:0.08em">
+      &#10003; You're on the list! We'll notify you when Autopilot launches.
+    </div>
+  </div>
+</section>
+
+<script>
+function joinAutopilotWaitlist() {
+  var email = document.getElementById('autopilot-email').value;
+  if (!email || email.indexOf('@') === -1) return;
+  fetch('https://kmibhtrppfllfvfqpzit.supabase.co/rest/v1/waitlist', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImttaWJodHJwcGZsbGZ2ZnFweml0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMDMzMTgsImV4cCI6MjA4OTc3OTMxOH0.18mLzoi8Lhz2pKVUYmMboPTMNBFcBFMIIc403I-EZUM',
+      'Prefer': 'return=minimal'
+    },
+    body: JSON.stringify({ email: email, source: 'autopilot-teaser' })
+  }).then(function() {
+    document.getElementById('autopilot-email').style.display = 'none';
+    document.getElementById('autopilot-email').parentElement.querySelector('button').style.display = 'none';
+    document.getElementById('autopilot-success').style.display = 'block';
+  });
+}
+</script>
+
 <!-- CTA BANNER -->
 <div class="cta-section">
   <div class="container">
