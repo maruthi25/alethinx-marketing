@@ -206,6 +206,13 @@
       .hero-stats{grid-template-columns:repeat(2,1fr)}
       .nvidia-inner{flex-direction:column;align-items:flex-start}
     }
+
+    /* DARK HERO OVERRIDES */
+    #hero .hero-h1{color:#fff}
+    #hero .hero-sub{color:rgba(238,232,255,0.8)}
+    #hero .btn-hero-ghost{border-color:rgba(255,255,255,0.2);color:#fff}
+    #hero .btn-hero-ghost:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.3)}
+
   </style>
 
   <!-- ALETHINX SALES AGENT: Visitor Tracking -->
@@ -277,61 +284,78 @@
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="container">
-    <p style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:12px;font-weight:700;color:#7c3aed;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px">AGENTIC DEAL INTELLIGENCE</p>
-    <h1 class="hero-h1" style="color:#0f0825">Autonomous AI Agents<br><span style="color:#7c3aed">for Deal Intelligence</span></h1>
-    <p class="hero-sub">7 proprietary AI engines that source, score, structure, and close business acquisitions and commercial real estate deals — autonomously.</p>
-    <p style="font-size:15px;color:#7c3aed;font-weight:500;margin-bottom:32px">No dashboards. No manual analysis. Just AI agents that work for you.</p>
-    <div class="hero-ctas">
-      <a href="https://app.alethinx.ai/deal-coworker" class="btn-hero-primary">🚀 Start Your First Deal Analysis →</a>
-      <a href="#engines" class="btn-hero-ghost">View All 7 Engines</a>
+<section id="hero" style="background:#2a0d5c;min-height:100vh;display:flex;align-items:center;padding:80px 0">
+  <div class="container" style="text-align:center">
+    <span style="display:inline-block;background:rgba(144,45,206,0.2);color:#902DCE;border:1px solid rgba(144,45,206,0.3);border-radius:999px;padding:4px 16px;font-size:14px;font-family:'Inter','InterFallback',sans-serif;margin-bottom:24px;letter-spacing:.04em">Now in Early Access</span>
+    <h1 class="hero-h1" style="color:#fff;font-size:clamp(36px,6vw,64px)">The AI Operating System<br><span style="color:#902DCE">for M&amp;A</span></h1>
+    <p class="hero-sub" style="color:rgba(238,232,255,0.8);font-size:clamp(16px,2vw,20px);max-width:640px;margin:0 auto 40px;line-height:1.6">Find. Buy. Run. Scale businesses with autonomous intelligence. Business DNA&trade; creates a living digital twin that powers smarter decisions across every stage of the deal lifecycle.</p>
+    <div class="hero-ctas" style="margin-bottom:32px">
+      <a href="https://app.alethinx.ai" class="btn-hero-primary" style="background:#902DCE;font-size:17px;padding:16px 32px;border-radius:12px;box-shadow:0 4px 24px rgba(144,45,206,0.4)">Get Early Access &mdash; Free</a>
+      <a href="#demo" class="btn-hero-ghost" style="border-color:rgba(255,255,255,0.2);color:#fff;font-size:17px;padding:15px 28px;border-radius:12px">Watch 90-Second Demo &rarr;</a>
     </div>
-
-    <!-- SAMPLE DEAL WIDGET -->
-    <div class="deal-widget">
-      <div class="deal-widget-label">✨ Sample Deal Analysis — No Signup Required</div>
-      <div class="deal-widget-title">HVAC Company · North Texas</div>
-      <div class="deal-widget-sub">$1.1M asking · $340K SDE · 15 years · 8 employees · Recurring contracts</div>
-      <div class="deal-scores">
-        <div class="deal-score-box" style="background:#f5f3ff">
-          <div class="num" style="color:#7c3aed">78</div>
-          <div class="lbl">Deal Score</div>
-        </div>
-        <div class="deal-score-box" style="background:#f5f3ff">
-          <div class="num" style="color:#7c3aed">1.80</div>
-          <div class="lbl">DSCR</div>
-        </div>
-        <div class="deal-score-box" style="background:#dcfce7">
-          <div class="num" style="color:#16a34a;font-size:18px;margin-top:4px">REVIEW</div>
-          <div class="lbl">AI Board</div>
-        </div>
-      </div>
-      <div class="deal-tags">
-        <span class="tag tag-green">✓ SBA 7(a) Eligible</span>
-        <span class="tag tag-purple">~$18,400/mo passive income</span>
-        <span class="tag tag-purple">Zero-PG Structure Available</span>
-      </div>
-      <div class="deal-row">
-        <div class="deal-cell deal-cell-green"><strong>✓ Strength:</strong> Recurring contracts, 15-year history, strong cash flow stability</div>
-        <div class="deal-cell deal-cell-red"><strong>⚠ Risk:</strong> Owner-operator dependency, seasonal revenue variance</div>
-      </div>
-      <div class="deal-board">
-        <div class="deal-board-title">👑 AI Board Quick Takes</div>
-        <div class="deal-board-row"><strong>CEO:</strong> Strong local position, scalable with the right operator in place</div>
-        <div class="deal-board-row"><strong>CFO:</strong> DSCR healthy at 1.80, SBA terms favorable at current rates</div>
-        <div class="deal-board-row"><strong>Risk:</strong> Transition plan critical — 90-day earnout strongly recommended</div>
-      </div>
-      <a href="https://app.alethinx.ai/deal-coworker" class="deal-cta">Run Your Own Deal Analysis Free →</a>
-      <div class="deal-disclaimer">AI-generated analysis for informational purposes only · Not investment advice · Full 200-item DD, LOI, financing stack in app</div>
+    <p style="font-size:14px;color:rgba(238,232,255,0.5);margin-bottom:48px">Secure &middot; Private &middot; Built for serious dealmakers &middot; No credit card required</p>
+    <div class="hero-stats" style="max-width:800px;margin:0 auto;background:rgba(255,255,255,0.05);border-color:rgba(144,45,206,0.2)">
+      <div class="stat-cell" style="background:rgba(255,255,255,0.05)"><div class="stat-num" style="color:#c084fc">$5T</div><div class="stat-label" style="color:rgba(238,232,255,0.7)">Enterprise value at stake</div><div class="stat-source" style="color:rgba(238,232,255,0.4)">McKinsey IEM, Feb 2026</div></div>
+      <div class="stat-cell" style="background:rgba(255,255,255,0.05)"><div class="stat-num" style="color:#c084fc">6M</div><div class="stat-label" style="color:rgba(238,232,255,0.7)">Businesses need new owners</div><div class="stat-source" style="color:rgba(238,232,255,0.4)">McKinsey IEM, Feb 2026</div></div>
+      <div class="stat-cell" style="background:rgba(255,255,255,0.05)"><div class="stat-num amber" style="color:#f59e0b">92%</div><div class="stat-label" style="color:rgba(238,232,255,0.7)">Close without a buyer</div><div class="stat-source" style="color:rgba(238,232,255,0.4)">McKinsey IEM</div></div>
+      <div class="stat-cell" style="background:rgba(255,255,255,0.05)"><div class="stat-num" style="color:#c084fc">$124T</div><div class="stat-label" style="color:rgba(238,232,255,0.7)">Wealth changing hands</div><div class="stat-source" style="color:rgba(238,232,255,0.4)">Cerulli Associates</div></div>
     </div>
+  </div>
+</section>
 
-    <!-- STATS -->
-    <div class="hero-stats" style="margin-top:48px">
-      <div class="stat-cell"><div class="stat-num">$5T</div><div class="stat-label">Enterprise value at stake</div><div class="stat-source">McKinsey IEM, Feb 2026</div></div>
-      <div class="stat-cell"><div class="stat-num">6M</div><div class="stat-label">Businesses need new owners</div><div class="stat-source">McKinsey IEM, Feb 2026</div></div>
-      <div class="stat-cell"><div class="stat-num amber">92%</div><div class="stat-label">Close without a buyer</div><div class="stat-source">McKinsey IEM</div></div>
-      <div class="stat-cell"><div class="stat-num">$124T</div><div class="stat-label">Wealth changing hands</div><div class="stat-source">Cerulli Associates</div></div>
+<!-- PROBLEM SECTION -->
+<section style="background:#0f0825;padding:80px 0">
+  <div class="container" style="text-align:center">
+    <p class="section-eyebrow" style="color:#902DCE">The Problem</p>
+    <h2 class="section-title" style="color:#fff;max-width:700px;margin:0 auto 16px">M&amp;A is Still Stuck in the Stone Age</h2>
+    <p class="section-sub" style="color:rgba(238,232,255,0.6);max-width:600px;margin:0 auto 48px">Every deal still requires armies of analysts, months of diligence, and millions in advisory fees. Most SMB acquisitions collapse before close.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:900px;margin:0 auto">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(144,45,206,0.15);border-radius:16px;padding:28px;text-align:left">
+        <div style="font-size:32px;margin-bottom:12px">&#128269;</div>
+        <h3 style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Sourcing is Manual</h3>
+        <p style="font-size:14px;color:rgba(238,232,255,0.6);line-height:1.6">Brokers list stale deals. Searchers spend 6&ndash;12 months scrolling BizBuySell. Off-market deals stay hidden.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(144,45,206,0.15);border-radius:16px;padding:28px;text-align:left">
+        <div style="font-size:32px;margin-bottom:12px">&#128200;</div>
+        <h3 style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Diligence is Fragmented</h3>
+        <p style="font-size:14px;color:rgba(238,232,255,0.6);line-height:1.6">Financial models in Excel. Legal reviews in email. Risk analysis in someone&rsquo;s head. Nothing connects.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(144,45,206,0.15);border-radius:16px;padding:28px;text-align:left">
+        <div style="font-size:32px;margin-bottom:12px">&#128176;</div>
+        <h3 style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Advisory Costs Kill ROI</h3>
+        <p style="font-size:14px;color:rgba(238,232,255,0.6);line-height:1.6">$50K&ndash;$250K per deal in advisory fees. Small acquirers can&rsquo;t compete with PE shops on tooling or talent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 PILLARS SECTION -->
+<section style="background:#1a0d40;padding:80px 0">
+  <div class="container" style="text-align:center">
+    <p class="section-eyebrow" style="color:#902DCE">The Sophynx 4 Pillars</p>
+    <h2 class="section-title" style="color:#fff;max-width:700px;margin:0 auto 16px">One Platform. Four Autonomous Layers.</h2>
+    <p class="section-sub" style="color:rgba(238,232,255,0.6);max-width:600px;margin:0 auto 48px">Alethinx replaces point solutions with an end-to-end AI operating system. Each pillar works independently &mdash; and compounds when combined.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:960px;margin:0 auto">
+      <div style="background:rgba(144,45,206,0.08);border:1px solid rgba(144,45,206,0.2);border-radius:16px;padding:28px;text-align:left">
+        <div style="font-size:14px;font-weight:700;color:#902DCE;margin-bottom:8px;font-family:'Inter','InterFallback',sans-serif;letter-spacing:.06em;text-transform:uppercase">01 &mdash; Source</div>
+        <h3 style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">SEEKER&trade; Engine</h3>
+        <p style="font-size:14px;color:rgba(238,232,255,0.6);line-height:1.6">Autonomous deal sourcing across on-market listings, off-market databases, and proprietary signals. Find deals before everyone else.</p>
+      </div>
+      <div style="background:rgba(144,45,206,0.08);border:1px solid rgba(144,45,206,0.2);border-radius:16px;padding:28px;text-align:left">
+        <div style="font-size:14px;font-weight:700;color:#902DCE;margin-bottom:8px;font-family:'Inter','InterFallback',sans-serif;letter-spacing:.06em;text-transform:uppercase">02 &mdash; Score</div>
+        <h3 style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Business DNA&trade;</h3>
+        <p style="font-size:14px;color:rgba(238,232,255,0.6);line-height:1.6">200+ factor scoring model that creates a living digital twin of any business. Financials, operations, risk, and opportunity &mdash; quantified.</p>
+      </div>
+      <div style="background:rgba(144,45,206,0.08);border:1px solid rgba(144,45,206,0.2);border-radius:16px;padding:28px;text-align:left">
+        <div style="font-size:14px;font-weight:700;color:#902DCE;margin-bottom:8px;font-family:'Inter','InterFallback',sans-serif;letter-spacing:.06em;text-transform:uppercase">03 &mdash; Structure</div>
+        <h3 style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Solomon&trade; Engine</h3>
+        <p style="font-size:14px;color:rgba(238,232,255,0.6);line-height:1.6">AI-generated LOIs, financing stacks, SBA structures, and deal terms. From scoring to signed offer in minutes, not months.</p>
+      </div>
+      <div style="background:rgba(144,45,206,0.08);border:1px solid rgba(144,45,206,0.2);border-radius:16px;padding:28px;text-align:left">
+        <div style="font-size:14px;font-weight:700;color:#902DCE;margin-bottom:8px;font-family:'Inter','InterFallback',sans-serif;letter-spacing:.06em;text-transform:uppercase">04 &mdash; Scale</div>
+        <h3 style="font-family:'Poppins','PoppinsFallback',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">AI Board&trade;</h3>
+        <p style="font-size:14px;color:rgba(238,232,255,0.6);line-height:1.6">A simulated board of directors &mdash; CEO, CFO, COO, Risk Officer &mdash; that debate every deal and surface blind spots humans miss.</p>
+      </div>
     </div>
   </div>
 </section>
