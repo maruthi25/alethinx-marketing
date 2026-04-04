@@ -1,0 +1,45 @@
+name: Claude Security Review
+
+on:
+  pull_request:
+    branches: [main, staging]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  security-events: write
+
+jobs:
+  security-review:
+    name: AI Security Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Claude Security Review
+        uses: anthropics/claude-code-security-review@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Alethinx-specific rules — check for these patterns on every PR:
+          custom_rules: |
+            CRITICAL: Never expose ANTHROPIC_API_KEY, STRIPE_SECRET_KEY, SUPABASE_SERVICE_ROLE_KEY in client code
+            CRITICAL: All Supabase tables must have RLS enabled — flag any migration without ALTER TABLE ... ENABLE ROW LEVEL SECURITY
+            CRITICAL: Edge functions must never accept unauthenticated requests to sensitive endpoints
+            HIGH: No direct Anthropic API calls in edge functions — must route through model-gateway
+            HIGH: No secrets or credentials in git history, .env files, or console.log statements
+            HIGH: pgvector queries must use parameterized inputs — no string concatenation in SQL
+            HIGH: Stripe webhook handlers must verify webhook signatures before processing
+            HIGH: CEO platform endpoints must validate x-ceo-secret header
+            MEDIUM: Every new async operation must have error handling and retry logic
+            MEDIUM: Loading states required on all UI interactions that call external APIs
+            MEDIUM: Mobile viewport (375px) compatibility required for all new components
+            INFO: TypeScript strict mode — flag any use of 'any' type in new code
+            INFO: All AI calls must log to model_call_logs table via ModelGateway
+          model: claude-opus-4-6
+          post_review_comment: true
+          fail_on_critical: true
+          fail_on_high: false
